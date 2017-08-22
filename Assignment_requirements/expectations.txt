@@ -1,0 +1,9 @@
+Expectations:
+
+Create at least 5 reasonable user stories and get your lecturer/tutor to assign priorities and acceptance tests for them
+Create a few spike user stories for those aspects of the project work which are technically challenging
+Create a private GitHub repository and add weekly commits for your project work and share with your lecturer/tutor
+Create a UML class diagram that represents the structure of your codebase
+The codebase should follow Java coding guidelines (those yellow warnings in IntelliJ IDEA are useful for this task)
+The codebase should be readable and include descriptive comments for complex parts
+Classes should be singular in purpose, methods should be singular in purpose

@@ -1,0 +1,16 @@
+User stories are short, simple descriptions of a feature told from the perspective of the person who desires the new
+capability, usually a user or customer of the system.
+
+As a < type of user >, I want < some goal > so that < some reason >.
+
+
+As a competitive person, I want to be able set and beat new high scores to compete against myself and others in a tangible way
+
+As a casual player, I want to be able to be able to play without setting up an account so that I can get in and just play.
+
+As a creative person, I wan to be able to change the appearance of my player appearance so that I stand out from the competition.
+
+As a social person, I want to be able to play against my friends over the internet, so that we can play from different computers.
+
+As a strategic person, I want to be able to also control my bike's speed and light emission , so that I can perform better.
+
