@@ -20,6 +20,7 @@ public class TestMultiCastReader {
             // blocking statement
             socket.receive(receivePacket);
 
+            // trim removes nulls from message buffer
             String resultStr = new String(messageBuffer).trim();
 
             if (resultStr.equals("END")){
