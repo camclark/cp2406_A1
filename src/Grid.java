@@ -28,11 +28,22 @@ public class Grid extends JPanel{
     }
 
     public void showGrid(){
-        for (int x = 0; x < GRID_WIDTH; x++) {
+        for (int y = 0; y < GRID_HEIGHT; y++) {
             System.out.println();
-            for (int y = 0; y < GRID_HEIGHT; y++) {
+            for (int x = 0; x < GRID_WIDTH; x++) {
                 System.out.print(grid[x][y]);
             }
+//                for (int x = 0; x < GRID_WIDTH; x++) {
+//            System.out.println();
+//            for (int y = 0; y < GRID_HEIGHT; y++) {
+//                System.out.print(grid[x][y]);
         }
+        System.out.println();
+
     }
+
+    public void draw(int xPosition, int yPosition, int playerNumber){
+        grid[xPosition][yPosition] = playerNumber;
+    }
+
 }

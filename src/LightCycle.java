@@ -1,5 +1,4 @@
 public class LightCycle {
-    public class Bike {
         // Directions are labeled clockwise
         public static final int DIRECTION_NORTH = 0;
         public static final int DIRECTION_EAST = 1;
@@ -8,20 +7,19 @@ public class LightCycle {
 
         public int xPosition;
         public int yPosition;
-        public int[][] gridArray;
-        public int player;
+        public int playerNumber;
         private int direction;
 
-        public void Bike(int initialDirection, int _xPosition, int _yPosition, int[][] _gridArray, int _player) {
-            direction = initialDirection;
-            xPosition = _xPosition;
-            yPosition = _yPosition;
-            gridArray = _gridArray;
-            player = _player;
-            gridArray[xPosition][yPosition] = player;
+
+        public LightCycle(int initialDirection, int _xPosition, int _yPosition, int _playerNumber) {
+            this.direction = initialDirection;
+            this.xPosition = _xPosition;
+            this.yPosition = _yPosition;
+            this.playerNumber = _playerNumber;
         }
 
         // To turn in the opposite direction to which you were coming is an illegal move as the bike will crash
+        // For later logic with key listeners
         public void turnWest() {
             if (direction != DIRECTION_EAST) {
                 direction = DIRECTION_WEST;
@@ -45,5 +43,25 @@ public class LightCycle {
                 direction = DIRECTION_NORTH;
             }
         }
-    }
+
+        public void move(){
+            // TODO: kill car if invalid move
+            switch(direction) {
+                case DIRECTION_NORTH:
+                    this.yPosition--;
+                    break;
+
+                case DIRECTION_EAST:
+                    this.xPosition++;
+                    break;
+
+                case DIRECTION_SOUTH:
+                    yPosition++;
+                    break;
+
+                case DIRECTION_WEST:
+                    this.xPosition--;
+                    break;
+            }
+        }
 }
