@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Grid extends JPanel{
+public class Grid extends JPanel {
 
     /* Height used as a constant in calculating the size of the visible GUI and the grid array. */
     private final int GRID_HEIGHT = 10;
@@ -30,7 +30,7 @@ public class Grid extends JPanel{
     }
 
 
-    public void showGrid(){
+    public void showGrid() {
         for (int y = 0; y < GRID_HEIGHT; y++) {
             System.out.println();
             for (int x = 0; x < GRID_WIDTH; x++) {
@@ -45,7 +45,7 @@ public class Grid extends JPanel{
 
     }
 
-    public void draw(int xPosition, int yPosition, int playerNumber){
+    public void draw(int xPosition, int yPosition, int playerNumber) {
         grid[xPosition][yPosition] = playerNumber;
     }
 
