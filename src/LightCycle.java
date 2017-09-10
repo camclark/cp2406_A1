@@ -1,3 +1,4 @@
+
 public class LightCycle {
         // Directions are labeled clockwise
         public static final int DIRECTION_NORTH = 0;
@@ -9,13 +10,18 @@ public class LightCycle {
         public int yPosition;
         public int playerNumber;
         private int direction;
+        // below wrong - i want the same board, not a new copy?
+        private int[][] gameGrid;
+        public boolean cycleAlive = true;
 
 
-        public LightCycle(int initialDirection, int _xPosition, int _yPosition, int _playerNumber) {
-            this.direction = initialDirection;
-            this.xPosition = _xPosition;
-            this.yPosition = _yPosition;
-            this.playerNumber = _playerNumber;
+
+    public LightCycle(int initialDirection, int xPosition, int yPosition, int playerNumber, int[][] gameGridList) {
+            direction = initialDirection;
+            this.xPosition = xPosition;
+            this.yPosition = yPosition;
+            this.playerNumber = playerNumber;
+            gameGrid = gameGridList;
         }
 
         // To turn in the opposite direction to which you were coming is an illegal move as the bike will crash
@@ -44,24 +50,48 @@ public class LightCycle {
             }
         }
 
+        public boolean validMove(int x, int y) {
+        // Ensure move is within gameBoard and not on an already occupied quadrant
+
+            return gameGrid[x][y] == 0 && x >= 0 && x < gameGrid.length && y >= 0 && y < gameGrid[0].length;
+
+        }
         public void move(){
-            // TODO: kill car if invalid move
             switch(direction) {
                 case DIRECTION_NORTH:
-                    this.yPosition--;
+                    cycleAlive = validMove(xPosition,yPosition - 1);
+                    if (cycleAlive) {
+                        yPosition--;
+                    }
                     break;
 
+
                 case DIRECTION_EAST:
-                    this.xPosition++;
+                    cycleAlive = validMove(xPosition + 1, yPosition) ;
+                    if (cycleAlive) {
+                        xPosition++;
+                    }
                     break;
 
                 case DIRECTION_SOUTH:
-                    yPosition++;
+                    cycleAlive = validMove(xPosition, yPosition + 1);
+                    if(cycleAlive){
+                        yPosition++;
+                    }
                     break;
 
                 case DIRECTION_WEST:
-                    this.xPosition--;
+                    cycleAlive = validMove(xPosition - 1, yPosition);
+                    if(cycleAlive) {
+                        xPosition--;
+                    }
                     break;
+                // kill bike
+
+            }
+            if(!cycleAlive){
+                System.out.print("player " + playerNumber + " has crashed");
+                // TODO: Terminate bike
             }
         }
 }

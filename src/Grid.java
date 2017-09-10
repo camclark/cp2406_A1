@@ -15,6 +15,8 @@ public class Grid extends JPanel{
     private final int WIDTH = GRID_WIDTH * 5;
     private final int HEIGHT = GRID_HEIGHT * 5;
 
+    // static bikes for the moment
+    LightCycle player1 = new LightCycle(1, 0, 0, 1, grid);
 
     public Grid() {
         setPreferredSize(new Dimension(WIDTH + 5, HEIGHT + 5)); // allow all grid lines to be shown
@@ -26,6 +28,7 @@ public class Grid extends JPanel{
             }
         }
     }
+
 
     public void showGrid(){
         for (int y = 0; y < GRID_HEIGHT; y++) {
