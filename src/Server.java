@@ -9,49 +9,25 @@ public class Server {
         newGrid.showGrid();
 
         for (int i = 0; i < 5; i++) {
-            newGrid.player1.move();
-            newGrid.draw(newGrid.player1.xPosition, newGrid.player1.yPosition, newGrid.player1.playerNumber);
-            try {
-                newServer.broadcast(newGrid);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            moveDrawAndSendTest(newServer, newGrid);
         }
 
         newGrid.player1.turnSouth();
 
         for (int i = 0; i < 5; i++) {
-            newGrid.player1.move();
-            newGrid.draw(newGrid.player1.xPosition, newGrid.player1.yPosition, newGrid.player1.playerNumber);
-            try {
-                newServer.broadcast(newGrid);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            moveDrawAndSendTest(newServer, newGrid);
         }
 
         newGrid.player1.turnWest();
 
         for (int i = 0; i < 4; i++) {
-            newGrid.player1.move();
-            newGrid.draw(newGrid.player1.xPosition, newGrid.player1.yPosition, newGrid.player1.playerNumber);
-            try {
-                newServer.broadcast(newGrid);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            moveDrawAndSendTest(newServer, newGrid);
         }
 
         newGrid.player1.turnNorth();
 
         for (int i = 0; i < 4; i++) {
-            newGrid.player1.move();
-            newGrid.draw(newGrid.player1.xPosition, newGrid.player1.yPosition, newGrid.player1.playerNumber);
-            try {
-                newServer.broadcast(newGrid);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            moveDrawAndSendTest(newServer, newGrid);
         }
 
         newGrid.showGrid();
@@ -63,6 +39,16 @@ public class Server {
 
         // last move to crash
         newGrid.player1.move();
+    }
+
+    private static void moveDrawAndSendTest(Server newServer, Grid newGrid) {
+        newGrid.player1.move();
+        newGrid.draw(newGrid.player1.xPosition, newGrid.player1.yPosition, newGrid.player1.playerNumber);
+        try {
+            newServer.broadcast(newGrid);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void broadcast(Grid newGrid) throws Exception{
@@ -83,7 +69,7 @@ public class Server {
 
     }
 
-    public String getPositionBroadcast(Grid newGrid){
+    private String getPositionBroadcast(Grid newGrid){
         return newGrid.player1.playerNumber + "," + newGrid.player1.xPosition + "," + newGrid.player1.yPosition;
     }
 

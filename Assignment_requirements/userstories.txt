@@ -2,16 +2,25 @@ User stories are short, simple descriptions of a feature told from the perspecti
 capability, usually a user or customer of the system.
 
 As a < type of user >, I want < some goal > so that < some reason >.
+Priorities marked by Lecturer Dimitri: (High H, Medium M, Low L)
 
 
-As a competitive person, I want to be able set and beat new high scores to compete against myself and others in a tangible way
+As a user, I want to be able to also control my light cycle using the arrow keys for the appropriate direction to be able to drive properly.\: H
+test: have bike move in appropriate direction to corresponding arrow key, ie. up key == up.
 
-As a casual player, I want to be able to be able to play without setting up an account so that I can get in and just play.
+As a social user, I want to be able to play against my friends over the internet, so that we can play from different computers: H
+test: create a multicast send/receiver which handles appropriate game information.
 
-As a creative person, I want to be able to change the colour of my bike and trail so that I stand out from the competition.
+As a casual user, I want to be able to be able to play without setting up an account so that I can get in and just play: H
+test: Be able to start up a game with default settings and therefore not have to set anything besides a user name
 
-As a social person, I want to be able to play against my friends over the internet, so that we can play from different computers.
+As a creative user, I want to be able to change the colour of my bike and trail so that I stand out from the competition: M
+test: change the draw colour of the bike trail.
 
-As a strategic person, I want to be able to also control my bike's speed and light emission , so that I can perform better. (fix)
+As a competitive user, I want to be able set and beat new high scores to compete against myself and others in a tangible way: L
+test: Create a scoreboard that stores the best 10 scores.
 
-Be more specific when going to measurable quanities (tangible)
+As a user, I want to be able to speed up and slow down my bike, so I can make more precise movement: L
+test: be able to alter bike velocity
+
+As a user, I want to be able to toggle the bike light emission , so that I can have better control of where I wall: L
