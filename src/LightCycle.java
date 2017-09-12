@@ -10,7 +10,6 @@ public class LightCycle {
     public int yPosition;
     public int playerNumber;
     private int direction;
-    // below wrong - i want the same board, not a new copy?
     private int[][] gameGrid;
     public boolean cycleAlive = true;
 
