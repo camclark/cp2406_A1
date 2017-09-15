@@ -8,9 +8,9 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class TestMovingCarGUI extends JPanel {
 
-    private GUICar carTest = new GUICar(this);
+    public GUICar carTest = new GUICar(this);
 
-    private TestMovingCarGUI() {
+    public TestMovingCarGUI() {
         addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -29,7 +29,7 @@ public class TestMovingCarGUI extends JPanel {
         setFocusable(true);
     }
 
-    private void move() {
+    public void move() {
         carTest.move();
     }
 
@@ -42,7 +42,7 @@ public class TestMovingCarGUI extends JPanel {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        JFrame frame = new JFrame("Drive car");
+        JFrame frame = new JFrame("Drive Car");
         TestMovingCarGUI game = new TestMovingCarGUI();
         frame.add(game);
         frame.setSize(300, 400);

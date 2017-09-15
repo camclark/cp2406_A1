@@ -1,17 +1,17 @@
 
 public class LightCycle {
     // Directions are labeled clockwise
-    public static final int DIRECTION_NORTH = 0;
-    public static final int DIRECTION_EAST = 1;
-    public static final int DIRECTION_SOUTH = 2;
-    public static final int DIRECTION_WEST = 3;
+    private static final int DIRECTION_NORTH = 0;
+    private static final int DIRECTION_EAST = 1;
+    private static final int DIRECTION_SOUTH = 2;
+    private static final int DIRECTION_WEST = 3;
 
     public int xPosition;
     public int yPosition;
     public int playerNumber;
     int direction;
     private int[][] gameGrid;
-    public boolean cycleAlive = true;
+    private boolean cycleAlive = true;
 
 
     public LightCycle(int initialDirection, int xPosition, int yPosition, int playerNumber, int[][] gameGridList) {
@@ -48,7 +48,7 @@ public class LightCycle {
         }
     }
 
-    public boolean validMove(int x, int y) {
+    private boolean validMove(int x, int y) {
         // Ensure move is within gameBoard and not on an already occupied quadrant
         return gameGrid[x][y] == 0 && x >= 0 && x < gameGrid.length && y >= 0 && y < gameGrid[0].length;
 

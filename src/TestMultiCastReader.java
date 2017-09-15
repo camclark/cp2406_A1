@@ -4,6 +4,8 @@ import java.net.MulticastSocket;
 
 public class TestMultiCastReader {
     public static void main(String[] args) throws Exception {
+        // compatible with TestMulticastMovement and TestMulticastSender
+
         // fixes mac OS bug with wireless internet use
         System.setProperty("java.net.preferIPv4Stack", "true");
 

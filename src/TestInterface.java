@@ -42,7 +42,7 @@ public class TestInterface extends JPanel {
             game.repaint();
             Thread.sleep(10);
 
-            if(game.x > 300){
+            if(game.x >= 270){
                 game.x = 1;
             }
         }

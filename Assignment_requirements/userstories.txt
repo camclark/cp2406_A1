@@ -8,7 +8,7 @@ Priorities marked by Lecturer Dimitri: (High H, Medium M, Low L)
 As a user, I want to be able to also control my light cycle using the arrow keys for the appropriate direction to be able to drive properly.\: H
 test: have bike move in appropriate direction to corresponding arrow key, ie. up key == up - be able to move in all directions
 
-As a social user, I want to be able to play against my friends over the internet, so that we can play from different computers: H
+As a social user, I want to be able to play against my friends over a LAN, so that we can play from different computers: H
 test: create a multicast send/receiver which handles appropriate game information.
 
 As a casual user, I want to be able to be able to play without setting up an account so that I can get in and just play: H

@@ -8,7 +8,6 @@ public class GUICar {
     int y = 0;
     int ya = 0;
     private TestMovingCarGUI game;
-    // make bolean for key press
 
     public GUICar(TestMovingCarGUI game) {
         this.game= game;
@@ -26,13 +25,11 @@ public class GUICar {
     }
 
     public void keyReleased(KeyEvent e) {
-
-
+        ya = 0;
+        xa = 0;
     }
 
     public void keyPressed(KeyEvent e) {
-
-
         if (e.getKeyCode() == KeyEvent.VK_LEFT)
             xa = -1;
         if (e.getKeyCode() == KeyEvent.VK_RIGHT)
