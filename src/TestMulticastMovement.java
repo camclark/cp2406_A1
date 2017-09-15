@@ -11,7 +11,7 @@ public class TestMulticastMovement {
     public static void main(String[] args) throws Exception {
         TestMulticastMovement player = new TestMulticastMovement();
         Grid newGrid = new Grid();
-        newGrid.showGrid();
+        newGrid.printGrid();
 
         for (int i = 0; i < 5; i++) {
             newGrid.player1.move();
@@ -42,7 +42,7 @@ public class TestMulticastMovement {
             newGrid.draw(newGrid.player1.xPosition, newGrid.player1.yPosition, newGrid.player1.playerNumber);
         }
 
-        newGrid.showGrid();
+        newGrid.printGrid();
 
         // last move to crash
         newGrid.player1.move();

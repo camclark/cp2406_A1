@@ -20,7 +20,7 @@ public class Grid{
         }
     }
 
-    public void showGrid() {
+    public void printGrid() {
         for (int y = 0; y < GRID_HEIGHT; y++) {
             System.out.println();
             for (int x = 0; x < GRID_WIDTH; x++) {
