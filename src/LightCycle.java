@@ -9,7 +9,7 @@ public class LightCycle {
     public int xPosition;
     public int yPosition;
     public int playerNumber;
-    private int direction;
+    int direction;
     private int[][] gameGrid;
     public boolean cycleAlive = true;
 

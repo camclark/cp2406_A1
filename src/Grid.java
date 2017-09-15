@@ -11,9 +11,9 @@ public class Grid extends JPanel {
        spots on the visible grid. */
     private int[][] grid = new int[GRID_WIDTH][GRID_HEIGHT];
 
-    /* Number of pixels that make up the width of the graphical grid. */
-    private final int WIDTH = GRID_WIDTH * 5;
-    private final int HEIGHT = GRID_HEIGHT * 5;
+//    /* Number of pixels that make up the width of the graphical grid. */
+//    private final int WIDTH = GRID_WIDTH * 5;
+//    private final int HEIGHT = GRID_HEIGHT * 5;
 
     // static bikes for the moment
     LightCycle player1 = new LightCycle(1, 0, 0, 1, grid);
@@ -36,10 +36,6 @@ public class Grid extends JPanel {
             for (int x = 0; x < GRID_WIDTH; x++) {
                 System.out.print(grid[x][y]);
             }
-//                for (int x = 0; x < GRID_WIDTH; x++) {
-//            System.out.println();
-//            for (int y = 0; y < GRID_HEIGHT; y++) {
-//                System.out.print(grid[x][y]);
         }
         System.out.println();
 

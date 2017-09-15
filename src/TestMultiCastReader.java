@@ -28,8 +28,6 @@ public class TestMultiCastReader {
             } else{
                 System.out.println("received: " + resultStr);
             }
-
-
         }
 
         socket.leaveGroup(address);

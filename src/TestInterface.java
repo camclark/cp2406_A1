@@ -1,8 +1,12 @@
 import java.awt.*;
 import javax.swing.*;
 
-@SuppressWarnings("serial")
-public class InterfaceTest extends JPanel {
+public class TestInterface extends JPanel {
+    /*
+    Test to understand how JPanels and moving objects work.
+    Two Ovals of different colours move to the right of the grid
+    and reset once they've reached the boundary
+     */
 
     private int x = 0;
     private int y = 0;
@@ -27,7 +31,7 @@ public class InterfaceTest extends JPanel {
 
     public static void main(String[] args) throws InterruptedException {
         JFrame frame = new JFrame("Interface Drive Right Loop");
-        InterfaceTest game = new InterfaceTest();
+        TestInterface game = new TestInterface();
         frame.add(game);
         frame.setSize(300, 400);
         frame.setVisible(true);
