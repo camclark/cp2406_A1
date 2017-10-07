@@ -21,6 +21,5 @@ public class TestDirectUDP {
         System.out.println(message);
 
         socket.close();
-
     }
 }

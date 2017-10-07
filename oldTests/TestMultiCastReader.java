@@ -20,8 +20,8 @@ public class TestMultiCastReader {
 
         socket.joinGroup(address);
 
-        Boolean runSwitch = Boolean.TRUE;
-        while (runSwitch == Boolean.TRUE) {
+        Boolean runSwitch = true;
+        while (runSwitch) {
             byte[] messageBuffer = new byte[1024];
             DatagramPacket receivePacket = new DatagramPacket(messageBuffer, 1024);
 
@@ -32,7 +32,7 @@ public class TestMultiCastReader {
             String resultStr = new String(messageBuffer).trim();
 
             if (resultStr.equals("END")){
-                runSwitch = Boolean.FALSE;
+                runSwitch = false;
             } else{
                 System.out.println("received: " + resultStr);
             }
