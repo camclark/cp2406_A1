@@ -37,15 +37,30 @@ public class TestMulticastMovement {
         newGrid.player1.turnNorth();
         player.broadcastMovementChange(newGrid);
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 2; i++) {
+            newGrid.player1.move();
+            newGrid.draw(newGrid.player1.xPosition, newGrid.player1.yPosition, newGrid.player1.playerNumber);
+        }
+
+        newGrid.player1.turnEast();
+        player.broadcastMovementChange(newGrid);
+
+        for (int i = 0; i < 3; i++) {
             newGrid.player1.move();
             newGrid.draw(newGrid.player1.xPosition, newGrid.player1.yPosition, newGrid.player1.playerNumber);
         }
 
         newGrid.printGrid();
-
+//
         // last move to crash
         newGrid.player1.move();
+        newGrid.draw(newGrid.player1.xPosition, newGrid.player1.yPosition, newGrid.player1.playerNumber);
+
+        // shouldn't draw as car has crashed
+        newGrid.player1.move();
+        newGrid.draw(newGrid.player1.xPosition, newGrid.player1.yPosition, newGrid.player1.playerNumber);
+
+
     }
 
 
@@ -64,6 +79,5 @@ public class TestMulticastMovement {
 
         socket.leaveGroup(address);
         socket.close();
-
     }
 }

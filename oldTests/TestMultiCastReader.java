@@ -1,9 +1,15 @@
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
 public class TestMultiCastReader {
     public static void main(String[] args) throws Exception {
+        testMethod();
+
+    }
+
+    private static void testMethod() throws IOException {
         // compatible with TestMulticastMovement and TestMulticastSender
 
         // fixes mac OS bug with wireless internet use
@@ -34,6 +40,5 @@ public class TestMultiCastReader {
 
         socket.leaveGroup(address);
         socket.close();
-
     }
 }

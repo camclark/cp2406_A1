@@ -13,8 +13,7 @@ public class TestMovingCarGUI extends JPanel {
     public TestMovingCarGUI() {
         addKeyListener(new KeyListener() {
             @Override
-            public void keyTyped(KeyEvent e) {
-            }
+            public void keyTyped(KeyEvent e) { }
 
             @Override
             public void keyReleased(KeyEvent e) {
