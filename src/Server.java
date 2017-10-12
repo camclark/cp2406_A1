@@ -52,7 +52,6 @@ public class Server {
             }
             System.out.println();
 
-
             serverFailed = false;
 
             // add to list
@@ -61,8 +60,9 @@ public class Server {
                 Integer socket = Integer.parseInt(splitMessage[3]) ;
 
                 for (int i = 0; i < server.playerList.size(); i++){
-                    if (splitMessage[1].equals(server.playerList.get(i).getUsername()));
-                      serverFailed = true;
+                    if (splitMessage[1].equals(server.playerList.get(i).getUsername())) {
+                        serverFailed = true;
+                    }
                 }
 
                 if (serverFailed){
@@ -74,7 +74,7 @@ public class Server {
                     message = "OKAY";
                     server.playerList.add(new Player(username, socket));
                     DirectUDP.send(socket, MY_PORT, "10.0.0.2", message);
-
+                    System.out.println("Added: " + username);
                 }
 
                 if (server.playerList.size() == playersRequired) {
