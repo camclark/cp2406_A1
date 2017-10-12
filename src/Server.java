@@ -2,7 +2,8 @@ import java.util.ArrayList;
 import java.net.InetAddress;
 import java.util.List;
 import java.lang.reflect.*;
-
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class Server {
@@ -28,11 +29,79 @@ public class Server {
         int playersRequired = 2;
 
         Server server = new Server();
-        String[] splitMessage;
 
         // get connection of two players
 
         connector(MY_PORT, server, playersRequired);
+
+        // start new game
+        Grid newGrid = new Grid();
+        int gridHeight = newGrid.getGRID_HEIGHT();
+        int gridWidth = newGrid.getGRID_WIDTH();
+
+        for (int i = 0; i < server.playerList.size(); i++) {
+            // origin and end - 1  to avoid starting on edge
+            int xPosition = ThreadLocalRandom.current().nextInt(1, gridWidth - 1);
+            int yPosition = ThreadLocalRandom.current().nextInt(1, gridHeight - 1);
+            int direction = ThreadLocalRandom.current().nextInt(0, 3 + 1);
+
+
+            // player number is +1 as 0 on board indicates empty spaces
+            newGrid.bikeList.add(new LightCycle(direction, xPosition, yPosition, i + 1, newGrid.grid));
+            System.out.println("Added bike " + (i + 1));
+        }
+
+        // play game - current game doesnt like walls and if bikes go for same tile at same time wont die
+        Boolean game = true;
+        newGrid.printGrid();
+        while (game) {
+            moveEachBike(server, newGrid);
+            drawEachBike(server, newGrid);
+
+            newGrid.printGrid();
+            if (numberBikesAlive(server, newGrid) <= 1) {
+                game = false;
+
+            }
+        }
+
+        System.out.println("Player " + getWinningBikeNumber(server, newGrid) + " wins!");
+
+
+    }
+
+    private static Integer getWinningBikeNumber(Server server, Grid newGrid) {
+        for (int i = 0; i < server.playerList.size(); i++) {
+            if (newGrid.bikeList.get(i).cycleAlive) {
+                return newGrid.bikeList.get(i).playerNumber;
+            }
+        }
+        // needed? otherwise no return?
+        return 0;
+    }
+
+
+        private static Integer numberBikesAlive(Server server, Grid newGrid) {
+        int count = 0;
+        for (int i = 0; i < server.playerList.size(); i++) {
+            if (newGrid.bikeList.get(i).cycleAlive) {
+                count = count + 1;
+            }
+        }
+        return count;
+    }
+
+    private static void moveEachBike(Server server, Grid newGrid) {
+        for (int i = 0; i < server.playerList.size(); i++) {
+            newGrid.bikeList.get(i).move();
+        }
+    }
+
+    private static void drawEachBike(Server server, Grid newGrid) {
+        for (int i = 0; i < server.playerList.size(); i++) {
+            newGrid.draw(newGrid.bikeList.get(i).xPosition, newGrid.bikeList.get(i).yPosition,
+                    newGrid.bikeList.get(i).playerNumber);
+        }
     }
 
     private static void connector(int MY_PORT, Server server, int playersRequired) throws Exception {
@@ -46,9 +115,9 @@ public class Server {
 
 
             // show message - for testing
-            System.out.println("Message split by space is:" );
-            for (int i = 0; i < splitMessage.length; i++){
-            System.out.print(splitMessage[i] + " ");
+            System.out.println("Message split by space is:");
+            for (String aSplitMessage : splitMessage) {
+                System.out.print(aSplitMessage + " ");
             }
             System.out.println();
 
@@ -56,21 +125,21 @@ public class Server {
 
             // add to list
             if (splitMessage[0].equals("ADD")) {
-                String username  = splitMessage[1];
-                Integer socket = Integer.parseInt(splitMessage[3]) ;
+                String username = splitMessage[1];
+                Integer socket = Integer.parseInt(splitMessage[3]);
 
-                for (int i = 0; i < server.playerList.size(); i++){
+                for (int i = 0; i < server.playerList.size(); i++) {
                     if (splitMessage[1].equals(server.playerList.get(i).getUsername())) {
                         serverFailed = true;
                     }
                 }
 
-                if (serverFailed){
+                if (serverFailed) {
                     message = "FAILED userNameTaken";
                     DirectUDP.send(socket, MY_PORT, "10.0.0.2", message);
 
                     // send a message to client saying that username is taken and to try again
-                } else{
+                } else {
                     message = "OKAY";
                     server.playerList.add(new Player(username, socket));
                     DirectUDP.send(socket, MY_PORT, "10.0.0.2", message);

@@ -11,7 +11,7 @@ public class LightCycle {
     public int playerNumber;
     int direction;
     private int[][] gameGrid;
-    private boolean cycleAlive = true;
+    boolean cycleAlive = true;
 
 
     public LightCycle(int initialDirection, int xPosition, int yPosition, int playerNumber, int[][] gameGridList) {
@@ -50,7 +50,7 @@ public class LightCycle {
 
     private boolean validMove(int x, int y) {
         // Ensure move is within gameBoard and not on an already occupied quadrant
-        return gameGrid[x][y] == 0 && x >= 0 && x < gameGrid.length && y >= 0 && y < gameGrid[0].length;
+        return  x >= 0 && x < gameGrid.length && y >= 0 && y < gameGrid[0].length && gameGrid[x][y] == 0;
 
     }
 
