@@ -16,7 +16,7 @@ public class TestMultiCastReader {
         System.setProperty("java.net.preferIPv4Stack", "true");
 
         InetAddress address = InetAddress.getByName("228.5.8.7");
-        MulticastSocket socket = new MulticastSocket(49152);
+        MulticastSocket socket = new MulticastSocket(49150);
 
         socket.joinGroup(address);
 

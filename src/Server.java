@@ -30,8 +30,11 @@ public class Server {
 
         Server server = new Server();
 
-        // get connection of two players
+        // show local IP
+        InetAddress localIP = InetAddress.getLocalHost();
+        System.out.println("my ip is: " + localIP.getHostAddress());
 
+        // get connection of two players
         connector(MY_PORT, server, playersRequired);
 
         // start new game
@@ -58,16 +61,35 @@ public class Server {
             moveEachBike(server, newGrid);
             drawEachBike(server, newGrid);
 
-            newGrid.printGrid();
-            if (numberBikesAlive(server, newGrid) <= 1) {
-                game = false;
+            // Position broadcast message eg: Jack,10,10 Jill,12,10 Tron,10,14
+            StringBuilder message = getPlayerPositionsMessage(server, newGrid);
+            MulticastUDP.sendMessage(message.toString());
 
-            }
+            newGrid.printGrid();
+            game = isWinner(server, newGrid);
         }
 
         System.out.println("Player " + getWinningBikeNumber(server, newGrid) + " wins!");
 
 
+    }
+
+    private static Boolean isWinner(Server server, Grid newGrid) {
+        Boolean game = true;
+        if (numberBikesAlive(server, newGrid) <= 1) {
+            game = false;
+        }
+        return game;
+    }
+
+    private static StringBuilder getPlayerPositionsMessage(Server server, Grid newGrid) {
+        StringBuilder message  = new StringBuilder();
+        for (int i = 0; i < server.playerList.size(); i++) {
+            Player player = server.playerList.get(i);
+            LightCycle bike = newGrid.bikeList.get(i);
+            message.append(player.getUsername()).append(",").append(bike.xPosition).append(",").append(bike.yPosition).append(" ");
+        }
+        return message;
     }
 
     private static Integer getWinningBikeNumber(Server server, Grid newGrid) {
