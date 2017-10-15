@@ -3,7 +3,7 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
-public class MulticastUDP {
+public class MulticastUDP extends Thread {
     static void sendMessage(String message) throws IOException {
         // fixes mac OS bug with wireless internet use
         System.setProperty("java.net.preferIPv4Stack", "true");

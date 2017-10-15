@@ -3,7 +3,7 @@ import java.net.DatagramPacket;
         import java.net.DatagramSocket;
         import java.net.InetAddress;
 
-public class DirectUDP {
+public class DirectUDP extends Thread{
     public static String receive(int port) throws Exception {
         // fixes mac OS bug with wireless internet use
         System.setProperty("java.net.preferIPv4Stack", "true");
