@@ -9,11 +9,11 @@ public class TestMulticastSender {
         String message = "SEND";
 
         InetAddress address = InetAddress.getByName("228.5.8.7");
-        MulticastSocket socket = new MulticastSocket(49152);
+        MulticastSocket socket = new MulticastSocket(49150);
 
         socket.joinGroup(address);
 
-        DatagramPacket packet = new DatagramPacket(message.getBytes(), message.length(), address, 49152);
+        DatagramPacket packet = new DatagramPacket(message.getBytes(), message.length(), address, 49150);
 
         socket.send(packet);
 

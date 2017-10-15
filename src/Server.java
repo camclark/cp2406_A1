@@ -71,7 +71,6 @@ public class Server {
 
         System.out.println("Player " + getWinningBikeNumber(server, newGrid) + " wins!");
 
-
     }
 
     private static Boolean isWinner(Server server, Grid newGrid) {
