@@ -26,7 +26,7 @@ public class Server {
     public static void main(String[] args) throws Exception {
         int MY_PORT = 49152;
         // change later to as many as needed
-        int playersRequired = 2;
+        int playersRequired = 3;
 
         Server server = new Server();
 
@@ -54,12 +54,15 @@ public class Server {
             System.out.println("Added bike " + (i + 1));
         }
 
-        // play game - current game doesnt like walls and if bikes go for same tile at same time wont die
+        // play game - current game doesn't like walls and if bikes go for same tile at same time wont die
         Boolean game = true;
         newGrid.printGrid();
         while (game) {
             moveEachBike(server, newGrid);
             drawEachBike(server, newGrid);
+
+            // sleep and give players a chance to think
+            Thread.sleep(250);
 
             // Position broadcast message eg: Jack,10,10 Jill,12,10 Tron,10,14
             StringBuilder message = getPlayerPositionsMessage(server, newGrid);
@@ -70,6 +73,12 @@ public class Server {
         }
 
         System.out.println("Player " + getWinningBikeNumber(server, newGrid) + " wins!");
+        String message = "Player " + getWinningBikeNumber(server, newGrid) + " wins!";
+        MulticastUDP.sendMessage(message);
+
+        // end game
+        message = "END";
+        MulticastUDP.sendMessage(message);
 
     }
 
