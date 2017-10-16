@@ -1,3 +1,4 @@
+import java.net.InetAddress;
 import java.util.Objects;
 
 public class Client extends Thread{
@@ -14,12 +15,10 @@ public class Client extends Thread{
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            System.out.println("Received: " + message);
             assert message != null;
             if (Objects.equals(message, "END")){
                 running = false;
                 System.out.println("Received: we're done here");
-
             }
         }
     }
@@ -28,25 +27,31 @@ public class Client extends Thread{
         int SEVER_PORT = 49152;
         int myPort = 49158;
         String message;
+//        InetAddress localIP = InetAddress.getLocalHost();
+        // TODO: fix IP
+        String localIP = "10.139.96.80";
 
         (new Client()).start();
 
-        String username = "funed";
+        String username = "funeders";
         // remove whitespace and non visible characters
         username = username.replaceAll("\\s+","");
+
+
 
         Boolean connected = false;
         while(!connected) {
             try {
-                message = "ADD " + username;
-                DirectUDP.send(SEVER_PORT, myPort, Client.serverIP, message);
+                message = "ADD " + username + " " + localIP;
+                DirectUDP.send(SEVER_PORT, myPort, serverIP, message);
                 connected = true;
+
+                System.out.println(localIP + myPort);
+                message = DirectUDP.receive(myPort);
+                System.out.println("Received: " + message);
             } catch (Exception e) {
                 myPort = myPort + 1;
             }
         }
-        message = DirectUDP.receive(myPort);
-        System.out.println("Received: " + message);
-
     }
 }

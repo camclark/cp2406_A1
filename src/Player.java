@@ -1,10 +1,12 @@
 public class Player {
     String username;
+    String ip;
     Integer socket;
 
-    public Player(String username, Integer socket) {
+    public Player(String username, String ip, Integer socket) {
         this.username = username;
         this.socket = socket;
+        this.ip = ip;
     }
 
     public String getUsername() {
@@ -21,5 +23,13 @@ public class Player {
 
     public void setSocket(Integer socket) {
         this.socket = socket;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 }
