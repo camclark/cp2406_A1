@@ -8,7 +8,7 @@ public class MulticastUDP extends Thread {
         // fixes mac OS bug with wireless internet use
         System.setProperty("java.net.preferIPv4Stack", "true");
 
-        InetAddress address = InetAddress.getByName("228.5.8.7");
+        InetAddress address = InetAddress.getByName("228.5.8.8");
         MulticastSocket socket = new MulticastSocket(49150);
 
         DatagramPacket packet = new DatagramPacket(message.getBytes(), message.length(), address, 49150);
