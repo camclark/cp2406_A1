@@ -28,7 +28,7 @@ public class MulticastReader {
             // blocking statement
             socket.receive(receivePacket);
 
-            // trim removes nulls from message buffer
+            // trim removes nulls from messageData buffer
             String resultStr = new String(messageBuffer).trim();
 
             if (resultStr.equals("END")){

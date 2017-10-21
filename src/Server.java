@@ -26,7 +26,7 @@ public class Server {
     public static void main(String[] args) throws Exception {
         int MY_PORT = 49152;
         // change later to as many as needed
-        int playersRequired = 3;
+        int playersRequired = 2;
 
         Server server = new Server();
 
@@ -62,9 +62,9 @@ public class Server {
             drawEachBike(server, newGrid);
 
             // sleep and give players a chance to think
-            Thread.sleep(250);
+            Thread.sleep(1000);
 
-            // Position broadcast message eg: Jack,10,10 Jill,12,10 Tron,10,14
+            // Position broadcast messageData eg: Jack,10,10 Jill,12,10 Tron,10,14
             StringBuilder message = getPlayerPositionsMessage(server, newGrid);
             MulticastUDP.sendMessage(message.toString());
 
@@ -144,7 +144,7 @@ public class Server {
             splitMessage = message.split(" ");
 
 
-            // show message - for testing
+            // show messageData - for testing
             System.out.println("Message split by space is:");
             for (String aSplitMessage : splitMessage) {
                 System.out.print(aSplitMessage + " ");
@@ -171,7 +171,7 @@ public class Server {
                     message = "FAILED userNameTaken";
                     DirectUDP.send(socket, MY_PORT, ip, message);
 
-                    // send a message to client saying that username is taken and to try again
+                    // send a messageData to client saying that username is taken and to try again
                 } else {
                     message = "OKAY";
                     server.playerList.add(new Player(username, ip, socket));

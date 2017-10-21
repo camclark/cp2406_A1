@@ -16,7 +16,7 @@ public class TestMulticastReader {
         System.setProperty("java.net.preferIPv4Stack", "true");
 
         InetAddress address = InetAddress.getByName("228.5.8.7");
-        MulticastSocket socket = new MulticastSocket(49150);
+        MulticastSocket socket = new MulticastSocket(49152);
 
         socket.joinGroup(address);
 
@@ -28,7 +28,7 @@ public class TestMulticastReader {
             // blocking statement
             socket.receive(receivePacket);
 
-            // trim removes nulls from message buffer
+            // trim removes nulls from messageData buffer
             String resultStr = new String(messageBuffer).trim();
 
             if (resultStr.equals("END")){

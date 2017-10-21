@@ -3,8 +3,8 @@ import java.util.ArrayList;
 public class Grid{
 
     /* Height used as a constant in calculating the size of the visible GUI and the grid array. */
-    private final int GRID_HEIGHT = 50;
-    private final int GRID_WIDTH = 50;
+    private final int GRID_HEIGHT = 25;
+    private final int GRID_WIDTH = 25;
 
     /* Two-dimensional grid to keep track of which bikes have "claimed" which
        spots on the visible grid. */
@@ -12,10 +12,6 @@ public class Grid{
 
     // static bikes for the moment
     ArrayList<LightCycle> bikeList = new ArrayList<>();
-
-//    LightCycle player1 = new LightCycle(1, 0, 0, 1, grid);
-//    LightCycle player2 = new LightCycle(1, 1, 1, 2, grid);
-
 
     public Grid() {
         //Set grid to 0

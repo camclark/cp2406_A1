@@ -35,7 +35,7 @@ public class MulticastUDP extends Thread {
         // blocking statement
         socket.receive(receivePacket);
 
-        // trim removes nulls from message buffer
+        // trim removes nulls from messageData buffer
         resultStr = new String(messageBuffer).trim();
 
         System.out.println("Received: " + resultStr);
