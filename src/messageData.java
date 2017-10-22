@@ -1,6 +1,6 @@
 public class messageData {
 
-    private String s;
+    public String s = null;
 
     //getters and setters
     public String getS() {

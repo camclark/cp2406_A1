@@ -5,24 +5,33 @@ public class Client extends Thread{
     private static String serverIP = "10.0.0.2";
     private messageData md;
 
+    public Client(messageData md) {
+        this.md = md;
+    }
+
 
     //One Jframe, jpanel for the grid and then another panel if required with proper layour
-    public void run(messageData md){
+    public void run(){
+        String rMessage = null;
+
+
         // listener
         Boolean running = true;
         while (running) {
 
-            String message = null;
             try {
-                message = MulticastUDP.receiveMessage();
-                md.setS(message);
+                rMessage = MulticastUDP.receiveMessage();
+                System.out.println("recieved in client thread : " + rMessage);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            assert message != null;
-            if (Objects.equals(message, "END")){
+            if (rMessage != null) {
+                md.setS(rMessage);
+            }
+            if (Objects.equals(rMessage, "END")){
                 running = false;
-                System.out.println("Received: we're done here");
+                System.out.println("Game over");
             }
         }
     }
@@ -35,16 +44,16 @@ public class Client extends Thread{
         String localIP = "10.0.0.2";
         messageData md = new messageData();
 
-        (new Client()).start();
+        (new Client(md)).start();
 
-        String username = "cam";
+        String username = "berro";
         // remove whitespace and non visible characters
         username = username.replaceAll("\\s+","");
 
 
 // todo: make enum so i can do better states
         Boolean connected = false;
-        Boolean playing = true;
+        Boolean playing = false;
 
         String[] splitMessage;
         String[] moveInformation;
@@ -67,11 +76,23 @@ public class Client extends Thread{
             }
         }
 
+        System.out.println("not playing yet");
+
+        while(!playing){
+            String thing = md.getS();
+            System.out.println(thing);
+            if (thing == null){
+                System.out.println("Waiting for players to connect");
+                Thread.sleep(1000);
+            } else if  (thing.equals("START")){
+                System.out.println("Game start!");
+                playing = true;
+            }
+        }
 
         while(playing) {
             // update ClientGui? hack job for the moment
             // not using thread, updated later
-            // TODO: update to use thread for playing
 //            message = MulticastUDP.receiveMessage();
 //            md.getS()
             message = md.getS();

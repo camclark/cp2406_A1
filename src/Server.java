@@ -27,7 +27,6 @@ public class Server {
         int MY_PORT = 49152;
         // change later to as many as needed
         int playersRequired = 2;
-
         Server server = new Server();
 
         // show local IP
@@ -54,6 +53,13 @@ public class Server {
             System.out.println("Added bike " + (i + 1));
         }
 
+        // wait 5sec for start
+        String message = "START";
+        MulticastUDP.sendMessage(message);
+        System.out.println("Game start in 5 seconds");
+        Thread.sleep(5000);
+
+
         // play game -  if bikes go for same tile at same time wont die
         Boolean game = true;
         newGrid.printGrid();
@@ -65,15 +71,15 @@ public class Server {
             Thread.sleep(1000);
 
             // Position broadcast messageData eg: Jack,10,10 Jill,12,10 Tron,10,14
-            StringBuilder message = getPlayerPositionsMessage(server, newGrid);
-            MulticastUDP.sendMessage(message.toString());
+            StringBuilder positionMessage = getPlayerPositionsMessage(server, newGrid);
+            MulticastUDP.sendMessage(positionMessage.toString());
 
             newGrid.printGrid();
             game = isWinner(server, newGrid);
         }
 
         System.out.println("Player " + getWinningBikeNumber(server, newGrid) + " wins!");
-        String message = "Player " + getWinningBikeNumber(server, newGrid) + " wins!";
+        message = "Player " + getWinningBikeNumber(server, newGrid) + " wins!";
         MulticastUDP.sendMessage(message);
 
         // end game
