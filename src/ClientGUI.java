@@ -14,7 +14,7 @@ class ClientGUI extends JFrame {
     final int FIELD_DX = 6; // determined experimentally
     final int FIELD_DY = 28;
     final int START_LOCATION = 200; // late night coding can't recall why I put this, required for set bounds
-    final int SHOW_DELAY = 200; // delay for animation
+    final int SHOW_DELAY = 500; // delay for animation
     final int LEFT = 37; // key codes
     final int UP = 38;
     final int RIGHT = 39;
@@ -22,7 +22,7 @@ class ClientGUI extends JFrame {
     final Color DEFAULT_COLOR = Color.blue;
     Canvas canvas = new Canvas();
 
-    public Trail trail1 = new Trail(2,3);
+    public Trail trail1 = new Trail();
 
 
     boolean gameOver = false;
@@ -34,36 +34,36 @@ class ClientGUI extends JFrame {
         setResizable(false);
         canvas.setBackground(Color.white);
         add(BorderLayout.CENTER, canvas);
-        addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e) {
-                // For later sending messages with key press
-//                bike.setDirection(e.getKeyCode());
-            }
-        });
+//        addKeyListener(new KeyAdapter() {
+//            public void keyPressed(KeyEvent e) {
+//                // For later sending messages with key press
+////                bike.setDirection(e.getKeyCode());
+//            }
+//        });
         setVisible(true);
     }
 
-    void go() { // main loop of game
-        while (!gameOver) {
+    public void run() { // main loop of game
+//        while (!gameOver) {
 //            bike.move();
             canvas.repaint();
-            try {
-                Thread.sleep(SHOW_DELAY);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+//            try {
+//                Thread.sleep(SHOW_DELAY);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     public static class Trail {
         public ArrayList<Point> trail = new ArrayList<Point>();
 
-        public Trail(int x, int y) {
-            trail.add(new Point(x, y));
-        }
+
+        public Trail() { }
 
         public void update(int x, int y) {
             trail.add(new Point(x, y));
+
         }
 
         void paint(Graphics g) {
@@ -77,6 +77,8 @@ class ClientGUI extends JFrame {
 
         public Point(int x, int y) {
             setXY(x, y);
+            this.color = Color.blue;
+
         }
 
         public Point(int x, int y, Color color) {

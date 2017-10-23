@@ -8,7 +8,9 @@ public class messageData {
     }
 
     public void setS(String s) {
-        this.s = s;
+        if (s != null){
+            this.s = s;
+        }
     }
 
 }
