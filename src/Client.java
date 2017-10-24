@@ -1,8 +1,8 @@
-import java.net.InetAddress;
+import java.awt.*;
 import java.util.Objects;
 
 public class Client extends Thread implements Runnable{
-    private static String serverIP = "10.0.0.31";
+    private static String serverIP = "10.139.96.80";
     private messageData md;
 
     public Client(messageData md) {
@@ -40,14 +40,14 @@ public class Client extends Thread implements Runnable{
         int myPort = 49158;
 //        InetAddress localIP = InetAddress.getLocalHost();
         // TODO: fix IP
-        String localIP = "10.0.0.31";
+        String localIP = "10.139.96.80";
         messageData md = new messageData();
 
         (new Client(md)).start();
 
 
 
-        String username = "hello";
+        String username = "wrello";
         // remove whitespace and non visible characters
         username = username.replaceAll("\\s+", "");
 
@@ -57,6 +57,15 @@ public class Client extends Thread implements Runnable{
 
         String[] splitMessage;
         String[] moveInformation;
+
+        // TODO: fix bike colours
+        Color[] bikeColors = new Color[3];
+        bikeColors[0] = Color.red;
+        bikeColors[1] = Color.blue;
+        bikeColors[2] = Color.green;
+
+
+
         int moveX, moveY;
         ClientGUI cg = new ClientGUI();
 
@@ -122,6 +131,7 @@ public class Client extends Thread implements Runnable{
 //            message = MulticastUDP.receiveMessage();
 //            md.getS()
 
+
         while (playing) {
 //            cg.trail1.update(10, 24);
 
@@ -129,6 +139,7 @@ public class Client extends Thread implements Runnable{
             if (message != null) {
                 splitMessage = message.split(" ");
                 if (splitMessage.length > 1) {
+                    int i = 0;
                     for (String aSplitMessage : splitMessage) {
                         moveInformation = aSplitMessage.split(",");
 
@@ -136,9 +147,10 @@ public class Client extends Thread implements Runnable{
                         moveY = Integer.parseInt(moveInformation[2]);
                         System.out.println("Attempted update X:" + moveX + " Y:" + moveY);
 
-                        cg.trail1.update(moveX, moveY);
+                        cg.trail1.update(moveX, moveY, bikeColors[i]);
+                        i = i+1;
                     }
-                    cg.run();
+                    cg.refresh();
                     Thread.sleep(500);
                 }
             }

@@ -12,7 +12,7 @@ public class Main {
         //create thread object
         listenThread lt= new listenThread(data);
 
-        //run thread
+        //refresh thread
         lt.start();
 
         while(true)

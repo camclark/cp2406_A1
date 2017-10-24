@@ -8,7 +8,7 @@ import java.io.*;
 
 class ClientGUI extends JFrame {
     final String GAME_OVER_MSG = "GAME OVER";
-    static final int POINT_RADIUS = 20; // size of one point
+    static final int POINT_RADIUS = 10; // size of one point
     final int FIELD_WIDTH = 40; // in point
     final int FIELD_HEIGHT = 40;
     final int FIELD_DX = 6; // determined experimentally
@@ -34,19 +34,30 @@ class ClientGUI extends JFrame {
         setResizable(false);
         canvas.setBackground(Color.white);
         add(BorderLayout.CENTER, canvas);
-//        addKeyListener(new KeyAdapter() {
+        addKeyListener(new KeyAdapter() {
 //            public void keyPressed(KeyEvent e) {
-//                // For later sending messages with key press
-////                bike.setDirection(e.getKeyCode());
-//            }
-//        });
-        setVisible(true);
-    }
+//                if (e.getKeyCode() == LEFT) ;
+//                {
+//
+//                } else if (e.getKeyCode() == UP) {
+//
+//                } else if (e.getKeyCode() == RIGHT) {
+//
+//                } else if (e.getKeyCode() == DOWN) {
+//
+//                }
+//
+//            // For later sending messages with key press
+//        }
+    });
 
-    public void run() { // main loop of game
+    setVisible(true);
+}
+
+    public void refresh() { // main loop of game
 //        while (!gameOver) {
 //            bike.move();
-            canvas.repaint();
+        canvas.repaint();
 //            try {
 //                Thread.sleep(SHOW_DELAY);
 //            } catch (InterruptedException e) {
@@ -55,69 +66,70 @@ class ClientGUI extends JFrame {
 //        }
     }
 
-    public static class Trail {
-        public ArrayList<Point> trail = new ArrayList<Point>();
+public static class Trail {
+    public ArrayList<Point> trail = new ArrayList<Point>();
 
 
-        public Trail() { }
-
-        public void update(int x, int y) {
-            trail.add(new Point(x, y));
-
-        }
-
-        void paint(Graphics g) {
-            for (Point point : trail) point.paint(g);
-        }
+    public Trail() {
     }
 
-    static class Point {
-        protected int x, y;
-        protected Color color = Color.blue;
+    public void update(int x, int y, Color bikeColor) {
+        trail.add(new Point(x, y, bikeColor));
 
-        public Point(int x, int y) {
-            setXY(x, y);
-            this.color = Color.blue;
-
-        }
-
-        public Point(int x, int y, Color color) {
-            setXY(x, y);
-            this.color = color;
-        }
-
-        int getX() {
-            return x;
-        }
-
-        int getY() {
-            return y;
-        }
-
-        void setXY(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        void paint(Graphics g) {
-            g.setColor(color);
-            g.fill3DRect(getX() * POINT_RADIUS + 1, getY() * POINT_RADIUS + 1, POINT_RADIUS - 2, POINT_RADIUS - 2, true); // fillOval()
-        }
     }
 
-    class Canvas extends JPanel {
-        @Override
-        public void paint(Graphics g) {
-            super.paint(g);
-            // paint each bike
-            trail1.paint(g);
+    void paint(Graphics g) {
+        for (Point point : trail) point.paint(g);
+    }
+}
 
-            if (gameOver) {
-                g.setColor(Color.red);
-                g.setFont(new Font("Arial", Font.BOLD, 60));
-                FontMetrics fm = g.getFontMetrics();
-                g.drawString(GAME_OVER_MSG, (FIELD_WIDTH * POINT_RADIUS + FIELD_DX - fm.stringWidth(GAME_OVER_MSG)) / 2, (FIELD_HEIGHT * POINT_RADIUS + FIELD_DY) / 2);
-            }
+static class Point {
+    protected int x, y;
+    protected Color color = Color.blue;
+
+//    public Point(int x, int y) {
+//        setXY(x, y);
+//        this.color = Color.blue;
+//
+//    }
+
+    public Point(int x, int y, Color color) {
+        setXY(x, y);
+        this.color = color;
+    }
+
+    int getX() {
+        return x;
+    }
+
+    int getY() {
+        return y;
+    }
+
+    void setXY(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    void paint(Graphics g) {
+        g.setColor(color);
+        g.fill3DRect(getX() * POINT_RADIUS + 1, getY() * POINT_RADIUS + 1, POINT_RADIUS - 2, POINT_RADIUS - 2, true); // fillOval()
+    }
+}
+
+class Canvas extends JPanel {
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+        // paint each bike
+        trail1.paint(g);
+
+        if (gameOver) {
+            g.setColor(Color.red);
+            g.setFont(new Font("Arial", Font.BOLD, 60));
+            FontMetrics fm = g.getFontMetrics();
+            g.drawString(GAME_OVER_MSG, (FIELD_WIDTH * POINT_RADIUS + FIELD_DX - fm.stringWidth(GAME_OVER_MSG)) / 2, (FIELD_HEIGHT * POINT_RADIUS + FIELD_DY) / 2);
         }
     }
+}
 }
