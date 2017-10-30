@@ -46,7 +46,7 @@ public class Server extends Thread implements Runnable {
                     splitMessage = rMessage.split(" ");
 
                     if (splitMessage[0].equals("USER")){
-                        int bikeNumber = Integer.parseInt(splitMessage[1]);
+                        int bikeNumber = Integer.parseInt(splitMessage[1]) - 1;
 
 
                         if(splitMessage[2].equals("TURN")){
@@ -54,11 +54,9 @@ public class Server extends Thread implements Runnable {
                             System.out.println("!! TURNING:" + direction);
                             // eg msg - USER player# TURN direction#
 
-
-
                             switch (direction) {
                                 case "NORTH":
-                                    System.out.println("!! NORTH !! ");
+                                    System.out.println("!! NORTH !! for  " + g.bikeList.get(bikeNumber));
                                     g.bikeList.get(bikeNumber).direction = DIRECTION_NORTH;
                                     break;
                                 case "EAST":

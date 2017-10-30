@@ -27,7 +27,7 @@ class ClientGUI extends JFrame {
 
     boolean gameOver = false;
 
-    ClientGUI() {
+    ClientGUI(int playerNumber) {
         setTitle("Tron by Cameron");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBounds(START_LOCATION, START_LOCATION, FIELD_WIDTH * POINT_RADIUS + FIELD_DX, FIELD_HEIGHT * POINT_RADIUS + FIELD_DY);
@@ -51,7 +51,7 @@ class ClientGUI extends JFrame {
 
                 } else if (e.getKeyCode() == DOWN) {
                     System.out.println("Down");
-                    message = "WEST";
+                    message = "SOUTH";
 
                 }
 
@@ -59,8 +59,8 @@ class ClientGUI extends JFrame {
                 Boolean sent = false;
                 while (!sent) {
                     try {
-                        // needs playernumber
-                        DirectUDP.send(49152, myPort, "10.139.96.80", "USER 1 TURN " + message);
+                        // needs playerNumber
+                        DirectUDP.send(49152, myPort, "10.139.96.80", "USER " + playerNumber + " TURN " + message);
                         sent = true;
                         System.out.println("Sent " + message);
                         // USER player# TURN direction#

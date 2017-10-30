@@ -10,7 +10,7 @@ public class Client extends Thread implements Runnable{
         this.md = md;
     }
 
-    //One Jframe, jpanel for the grid and then another panel if required with proper layour
+    //One Jframe, jpanel for the grid and then another panel if required with proper layout
     public void run() {
         String rMessage = null;
 
@@ -49,11 +49,11 @@ public class Client extends Thread implements Runnable{
 
         Color[] bikeColors = new Color[4];
         bikeColors[0] = Color.black;
-        bikeColors[1] = Color.red;
-        bikeColors[2] = Color.blue;
+        bikeColors[1] = Color.blue;
+        bikeColors[2] = Color.red;
         bikeColors[3] = Color.green;
 
-        String username = "jddrello";
+        String username = "loy";
         // remove whitespace and non visible characters
         username = username.replaceAll("\\s+", "");
 
@@ -68,7 +68,6 @@ public class Client extends Thread implements Runnable{
 
 
         int moveX, moveY;
-        ClientGUI cg = new ClientGUI();
 
         String message;
 
@@ -91,6 +90,7 @@ public class Client extends Thread implements Runnable{
         }
 
         System.out.println(username + " you are player " + playerNumber);
+        ClientGUI cg = new ClientGUI(playerNumber);
 
 
         while (!playing) {
