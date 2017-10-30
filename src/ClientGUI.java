@@ -36,15 +36,40 @@ class ClientGUI extends JFrame {
         add(BorderLayout.CENTER, canvas);
         addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
+                String message = null;
+                int myPort = 49147;
                 if (e.getKeyCode() == LEFT) {
                     System.out.println("Left");
+                    message = "WEST";
                 } else if (e.getKeyCode() == UP) {
                     System.out.println("Up");
+                    message = "NORTH";
+
                 } else if (e.getKeyCode() == RIGHT) {
                     System.out.println("Right");
+                    message = "EAST";
+
                 } else if (e.getKeyCode() == DOWN) {
                     System.out.println("Down");
+                    message = "WEST";
+
                 }
+
+                // todo: change to player number
+                Boolean sent = false;
+                while (!sent) {
+                    try {
+                        // needs playernumber
+                        DirectUDP.send(49152, myPort, "10.139.96.80", "USER 1 TURN " + message);
+                        sent = true;
+                        System.out.println("Sent " + message);
+                        // USER player# TURN direction#
+
+                    } catch (Exception e1) {
+                        myPort = myPort + 1;
+                    }
+                }
+
 //
 //            // For later sending messages with key press
         }

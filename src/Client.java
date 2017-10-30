@@ -53,7 +53,7 @@ public class Client extends Thread implements Runnable{
         bikeColors[2] = Color.blue;
         bikeColors[3] = Color.green;
 
-        String username = "fello";
+        String username = "jddrello";
         // remove whitespace and non visible characters
         username = username.replaceAll("\\s+", "");
 
@@ -65,8 +65,6 @@ public class Client extends Thread implements Runnable{
         String[] moveInformation;
 
         // TODO: fix bike colours
-
-
 
 
         int moveX, moveY;

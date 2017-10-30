@@ -1,10 +1,6 @@
 import java.io.IOException;
 import java.util.ArrayList;
 import java.net.InetAddress;
-import java.util.List;
-import java.lang.reflect.*;
-import java.util.Objects;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -29,10 +25,13 @@ public class Server extends Thread implements Runnable {
     }
 
     //One Jframe, jpanel for the grid and then another panel if required with proper layour
-    public void run(Grid g) {
+    public void run() {
         String rMessage = null;
         String[] splitMessage;
-
+        final int DIRECTION_NORTH = 0;
+        final int DIRECTION_EAST = 1;
+        final int DIRECTION_SOUTH = 2;
+        final int DIRECTION_WEST = 3;
 
         // listener
         Boolean running = true;
@@ -40,30 +39,48 @@ public class Server extends Thread implements Runnable {
 
             try {
                 rMessage = DirectUDP.receive(49152);
+                System.out.println(rMessage + "dun get");
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            if (rMessage != null) {
-                splitMessage = rMessage.split(" ");
 
-                if (splitMessage[0].equals("USER")){
+                if (rMessage != null) {
+                    splitMessage = rMessage.split(" ");
 
-                    if(splitMessage[2].equals("TURN")){
-                        // msg eg: USER number TURN left
+                    if (splitMessage[0].equals("USER")){
                         int bikeNumber = Integer.parseInt(splitMessage[1]);
 
 
+                        if(splitMessage[2].equals("TURN")){
+                            String direction = splitMessage[3];
+                            System.out.println("!! TURNING:" + direction);
+                            // eg msg - USER player# TURN direction#
 
+
+
+                            switch (direction) {
+                                case "NORTH":
+                                    System.out.println("!! NORTH !! ");
+                                    g.bikeList.get(bikeNumber).direction = DIRECTION_NORTH;
+                                    break;
+                                case "EAST":
+                                    System.out.println("!! EAST !! ");
+                                    g.bikeList.get(bikeNumber).direction = DIRECTION_EAST;
+                                    break;
+                                case "SOUTH":
+                                    System.out.println("!! SOUTH !! ");
+                                    g.bikeList.get(bikeNumber).direction = DIRECTION_SOUTH;
+                                    break;
+                                case "WEST":
+                                    System.out.println("!! WEST !! ");
+                                    g.bikeList.get(bikeNumber).direction = DIRECTION_WEST;
+                                    break;
+                            }
+                        }
                     }
-
-
-
-
                 }
-
-
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+
         }
     }
 
