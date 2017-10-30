@@ -8,7 +8,7 @@ public class TestDirectSend {
         System.setProperty("java.net.preferIPv4Stack", "true");
 
         DatagramSocket socket = new DatagramSocket(49153);
-        String message = "hello!";
+        String message = "hello!2";
 
         InetAddress address = InetAddress.getByName("10.139.96.80");
         DatagramPacket packet = new DatagramPacket(message.getBytes(), message.length(), address, 49152);

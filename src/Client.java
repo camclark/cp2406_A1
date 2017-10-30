@@ -5,10 +5,10 @@ public class Client extends Thread implements Runnable{
     private static String serverIP = "10.139.96.80";
     private messageData md;
 
+
     public Client(messageData md) {
         this.md = md;
     }
-
 
     //One Jframe, jpanel for the grid and then another panel if required with proper layour
     public void run() {
@@ -42,12 +42,18 @@ public class Client extends Thread implements Runnable{
         // TODO: fix IP
         String localIP = "10.139.96.80";
         messageData md = new messageData();
+        Integer playerNumber = 0;
+
 
         (new Client(md)).start();
 
+        Color[] bikeColors = new Color[4];
+        bikeColors[0] = Color.black;
+        bikeColors[1] = Color.red;
+        bikeColors[2] = Color.blue;
+        bikeColors[3] = Color.green;
 
-
-        String username = "wrello";
+        String username = "fello";
         // remove whitespace and non visible characters
         username = username.replaceAll("\\s+", "");
 
@@ -59,21 +65,12 @@ public class Client extends Thread implements Runnable{
         String[] moveInformation;
 
         // TODO: fix bike colours
-        Color[] bikeColors = new Color[3];
-        bikeColors[0] = Color.red;
-        bikeColors[1] = Color.blue;
-        bikeColors[2] = Color.green;
+
 
 
 
         int moveX, moveY;
         ClientGUI cg = new ClientGUI();
-
-
-
-//        cg.trail1.update(10, 20);
-//        cg.trail1.update(10, 21);
-
 
         String message;
 
@@ -81,66 +78,42 @@ public class Client extends Thread implements Runnable{
             try {
                 message = "ADD " + username + " " + localIP;
                 DirectUDP.send(SEVER_PORT, myPort, serverIP, message);
-                connected = true;
 
                 System.out.println("My IP is: " + localIP + " My port is:" + myPort);
                 message = DirectUDP.receive(myPort);
                 System.out.println("Received: " + message);
+                splitMessage = message.split(" ");
+                if (splitMessage[0].equals("OKAY")){
+                    playerNumber = Integer.parseInt(splitMessage[2]);
+                    connected = true;
+                }
             } catch (Exception e) {
                 myPort = myPort + 1;
             }
         }
 
-        System.out.println("not playing yet");
-//        cg.trail1.update(10, 22);
+        System.out.println(username + " you are player " + playerNumber);
+
 
         while (!playing) {
             String thing = md.getS();
-            if (thing == null) {
+            if (thing == null || !thing.equals("START")) {
                 System.out.println("Waiting for players to connect");
-                Thread.sleep(1000);
+                Thread.sleep(2000);
             } else if (thing.equals("START")) {
-                System.out.println("Game start!");
+                System.out.println("Game start in 5 seconds!");
                 playing = true;
             }
         }
 
-//        while(playing) {
-//            // update ClientGui? hack job for the moment
-//            // not using thread, updated later
-////            message = MulticastUDP.receiveMessage();
-////            md.getS()
-//            message = md.getS();
-//            splitMessage = message.split(" ");
-//            if (splitMessage.length > 1) {
-//                for (for ) {
-//                    moveInformation = aSplitMessage.split(",");
-//
-//                    moveX = Integer.parseInt(moveInformation[1]);
-//                    moveY = Integer.parseInt(moveInformation[2]);
-//                    System.out.println("SPLITTIES x:" + moveX + " y:" + moveY);
-//
-//                    cg.trail1.update(moveX, moveY);
-//                }
-//            }
-//        }
-
-
-        // update ClientGui? hack job for the moment
-        // not using thread, updated later
-//            message = MulticastUDP.receiveMessage();
-//            md.getS()
-
-
         while (playing) {
-//            cg.trail1.update(10, 24);
-
             message = md.getS();
             if (message != null) {
                 splitMessage = message.split(" ");
                 if (splitMessage.length > 1) {
                     int i = 0;
                     for (String aSplitMessage : splitMessage) {
+                        i = i+1;
                         moveInformation = aSplitMessage.split(",");
 
                         moveX = Integer.parseInt(moveInformation[1]);
@@ -148,7 +121,6 @@ public class Client extends Thread implements Runnable{
                         System.out.println("Attempted update X:" + moveX + " Y:" + moveY);
 
                         cg.trail1.update(moveX, moveY, bikeColors[i]);
-                        i = i+1;
                     }
                     cg.refresh();
                     Thread.sleep(500);

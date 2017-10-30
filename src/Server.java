@@ -1,14 +1,17 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.net.InetAddress;
 import java.util.List;
 import java.lang.reflect.*;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 
-public class Server {
+public class Server extends Thread implements Runnable {
     private ArrayList<Player> playerList = new ArrayList<>();
     // eg of how to get from ArrayList -  server.playerList.get(0).getUsername()
+    private Grid g;
 
 
     // the boolean that will be turned of to stop the server
@@ -18,8 +21,50 @@ public class Server {
      *  server constructor that receive the port to listen to for connection as parameter
      *  in console
      */
-    private Server() throws Exception {
-        InetAddress LOCAL_IP = InetAddress.getLocalHost();
+    private Server(Grid g) throws Exception {
+        this.g = g;
+
+//        InetAddress LOCAL_IP = InetAddress.getLocalHost();
+
+    }
+
+    //One Jframe, jpanel for the grid and then another panel if required with proper layour
+    public void run(Grid g) {
+        String rMessage = null;
+        String[] splitMessage;
+
+
+        // listener
+        Boolean running = true;
+        while (running) {
+
+            try {
+                rMessage = DirectUDP.receive(49152);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (rMessage != null) {
+                splitMessage = rMessage.split(" ");
+
+                if (splitMessage[0].equals("USER")){
+
+                    if(splitMessage[2].equals("TURN")){
+                        // msg eg: USER number TURN left
+                        int bikeNumber = Integer.parseInt(splitMessage[1]);
+
+
+
+                    }
+
+
+
+
+                }
+
+
+            }
+        }
     }
 
 
@@ -27,7 +72,8 @@ public class Server {
         int MY_PORT = 49152;
         // change later to as many as needed
         int playersRequired = 2;
-        Server server = new Server();
+        Grid g = new Grid();
+        Server server = new Server(g);
 
         // show local IP
         InetAddress localIP = InetAddress.getLocalHost();
@@ -37,9 +83,9 @@ public class Server {
         connector(MY_PORT, server, playersRequired);
 
         // start new game
-        Grid newGrid = new Grid();
-        int gridHeight = newGrid.getGRID_HEIGHT();
-        int gridWidth = newGrid.getGRID_WIDTH();
+        int gridHeight = g.getGRID_HEIGHT();
+        int gridWidth = g.getGRID_WIDTH();
+
 
         for (int i = 0; i < server.playerList.size(); i++) {
             // origin and end - 1  to avoid starting on edge
@@ -49,17 +95,34 @@ public class Server {
 
 
             // player number is +1 as 0 on board indicates empty spaces
-            newGrid.bikeList.add(new LightCycle(direction, xPosition, yPosition, i + 1, newGrid.grid));
+            g.bikeList.add(new LightCycle(direction, xPosition, yPosition, i + 1, g.grid));
             System.out.println("Added bike " + (i + 1));
         }
 
-        // wait 5sec for start
+        // wait 2 sec for client to process
+        Thread.sleep(2000);
+
+        // wait 5 sec for game start to process
         String message = "START";
         MulticastUDP.sendMessage(message);
         System.out.println("Game start in 5 seconds");
         Thread.sleep(5000);
 
+        // run action listener and game
+        (new Server(g)).start();
+        playGame(server, g);
 
+        message = "Player " + getWinningBikeNumber(server, g) + " wins!";
+        System.out.println(message);
+        MulticastUDP.sendMessage(message);
+
+        // end game
+        message = "END";
+        MulticastUDP.sendMessage(message);
+
+    }
+
+    private static void playGame(Server server, Grid newGrid) throws InterruptedException, IOException {
         // play game -  if bikes go for same tile at same time wont die
         Boolean game = true;
         newGrid.printGrid();
@@ -77,15 +140,6 @@ public class Server {
             newGrid.printGrid();
             game = isWinner(server, newGrid);
         }
-
-        System.out.println("Player " + getWinningBikeNumber(server, newGrid) + " wins!");
-        message = "Player " + getWinningBikeNumber(server, newGrid) + " wins!";
-        MulticastUDP.sendMessage(message);
-
-        // end game
-        message = "END";
-        MulticastUDP.sendMessage(message);
-
     }
 
     private static Boolean isWinner(Server server, Grid newGrid) {
@@ -144,6 +198,8 @@ public class Server {
         String[] splitMessage;
         Boolean serverFailed;
         Boolean startGame = false;
+        Integer playerNumber = 0;
+
 
         while (!startGame) {
             String message = DirectUDP.receive(MY_PORT);
@@ -179,15 +235,16 @@ public class Server {
 
                     // send a messageData to client saying that username is taken and to try again
                 } else {
-                    message = "OKAY";
-                    server.playerList.add(new Player(username, ip, socket));
+                    playerNumber = playerNumber + 1;
+                    message = "OKAY " + username + " " + playerNumber ;
+                    server.playerList.add(new Player(username, ip, socket, playerNumber));
                     DirectUDP.send(socket, MY_PORT, ip, message);
-                    System.out.println("Added: " + username);
+                    System.out.println("Added: " + username + " Player no." + playerNumber + " IP: " + ip + " Socket: " + socket);
                 }
 
                 if (server.playerList.size() == playersRequired) {
                     startGame = true;
-                    System.out.println("Two players connected: Game start");
+                    System.out.println(playersRequired + " players connected: Game start");
                 }
             }
         }

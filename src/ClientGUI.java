@@ -35,20 +35,19 @@ class ClientGUI extends JFrame {
         canvas.setBackground(Color.white);
         add(BorderLayout.CENTER, canvas);
         addKeyListener(new KeyAdapter() {
-//            public void keyPressed(KeyEvent e) {
-//                if (e.getKeyCode() == LEFT) ;
-//                {
-//
-//                } else if (e.getKeyCode() == UP) {
-//
-//                } else if (e.getKeyCode() == RIGHT) {
-//
-//                } else if (e.getKeyCode() == DOWN) {
-//
-//                }
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == LEFT) {
+                    System.out.println("Left");
+                } else if (e.getKeyCode() == UP) {
+                    System.out.println("Up");
+                } else if (e.getKeyCode() == RIGHT) {
+                    System.out.println("Right");
+                } else if (e.getKeyCode() == DOWN) {
+                    System.out.println("Down");
+                }
 //
 //            // For later sending messages with key press
-//        }
+        }
     });
 
     setVisible(true);

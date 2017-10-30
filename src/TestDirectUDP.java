@@ -15,11 +15,16 @@ public class TestDirectUDP {
         byte[] messageBuffer = new byte[1024];
         DatagramPacket receivePacket = new DatagramPacket(messageBuffer, 1024);
 
-        socket.receive(receivePacket);
+        while(true) {
+            socket.receive(receivePacket);
 
-        String message = new String(messageBuffer).trim();
-        System.out.println(message);
+            String message = new String(messageBuffer).trim();
+            System.out.println(message);
 
-        socket.close();
+            if (message.equals("END")){
+                        socket.close();
+            }
+
+        }
     }
 }
