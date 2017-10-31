@@ -2,7 +2,7 @@ import java.awt.*;
 import java.util.Objects;
 
 public class Client extends Thread implements Runnable{
-    private static String serverIP = "10.139.96.80";
+    private static String serverIP = "10.0.0.2";
     private messageData md;
 
 
@@ -40,7 +40,7 @@ public class Client extends Thread implements Runnable{
         int myPort = 49158;
 //        InetAddress localIP = InetAddress.getLocalHost();
         // TODO: fix IP
-        String localIP = "10.139.96.80";
+        String localIP = "10.0.0.2";
         messageData md = new messageData();
         Integer playerNumber = 0;
 
@@ -53,7 +53,7 @@ public class Client extends Thread implements Runnable{
         bikeColors[2] = Color.red;
         bikeColors[3] = Color.green;
 
-        String username = "loy";
+        String username = "pjojoy";
         // remove whitespace and non visible characters
         username = username.replaceAll("\\s+", "");
 

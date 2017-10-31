@@ -60,7 +60,7 @@ class ClientGUI extends JFrame {
                 while (!sent) {
                     try {
                         // needs playerNumber
-                        DirectUDP.send(49152, myPort, "10.139.96.80", "USER " + playerNumber + " TURN " + message);
+                        DirectUDP.send(49152, myPort, "10.0.0.2", "USER " + playerNumber + " TURN " + message);
                         sent = true;
                         System.out.println("Sent " + message);
                         // USER player# TURN direction#

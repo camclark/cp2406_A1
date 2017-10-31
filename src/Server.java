@@ -17,7 +17,7 @@ public class Server extends Thread implements Runnable {
      *  server constructor that receive the port to listen to for connection as parameter
      *  in console
      */
-    private Server(Grid g) throws Exception {
+    public Server(Grid g) throws Exception {
         this.g = g;
 
 //        InetAddress LOCAL_IP = InetAddress.getLocalHost();
@@ -254,6 +254,8 @@ public class Server extends Thread implements Runnable {
                     message = "OKAY " + username + " " + playerNumber ;
                     server.playerList.add(new Player(username, ip, socket, playerNumber));
                     DirectUDP.send(socket, MY_PORT, ip, message);
+
+
                     System.out.println("Added: " + username + " Player no." + playerNumber + " IP: " + ip + " Socket: " + socket);
                 }
 
