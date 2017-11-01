@@ -28,10 +28,6 @@ public class Server extends Thread implements Runnable {
     public void run() {
         String rMessage = null;
         String[] splitMessage;
-        final int DIRECTION_NORTH = 0;
-        final int DIRECTION_EAST = 1;
-        final int DIRECTION_SOUTH = 2;
-        final int DIRECTION_WEST = 3;
 
         // listener
         Boolean running = true;
@@ -39,7 +35,7 @@ public class Server extends Thread implements Runnable {
 
             try {
                 rMessage = DirectUDP.receive(49152);
-                System.out.println(rMessage + "dun get");
+                System.out.println(rMessage + ": received in listening thread");
 
 
                 if (rMessage != null) {
@@ -51,28 +47,28 @@ public class Server extends Thread implements Runnable {
 
                         if (splitMessage[2].equals("TURN")) {
                             String direction = splitMessage[3];
-                            System.out.println("TURNING:" + direction);
+                            System.out.println("TURNING: " + direction);
                             // eg msg - USER player# TURN direction#
 
                             switch (direction) {
                                 case "NORTH":
-                                    g.bikeList.get(bikeNumber).direction = DIRECTION_NORTH;
+                                    g.bikeList.get(bikeNumber).turnNorth();
                                     break;
                                 case "EAST":
-                                    g.bikeList.get(bikeNumber).direction = DIRECTION_EAST;
+                                    g.bikeList.get(bikeNumber).turnEast();
                                     break;
                                 case "SOUTH":
-                                    g.bikeList.get(bikeNumber).direction = DIRECTION_SOUTH;
+                                    g.bikeList.get(bikeNumber).turnSouth();
                                     break;
                                 case "WEST":
-                                    g.bikeList.get(bikeNumber).direction = DIRECTION_WEST;
+                                    g.bikeList.get(bikeNumber).turnWest();
                                     break;
                             }
                         }
                         if (splitMessage[2].equals("TOGGLE")) {
                             // eg msg - USER player# TOGGLE SPEED
                             if (splitMessage[3].equals("SPEED")){
-                                System.out.println("Toggle speed for bike: " + g.bikeList.get(bikeNumber));
+                                System.out.println("Toggle speed for bike: " + bikeNumber);
                                 g.bikeList.get(bikeNumber).toggleSpeed();
                             }
                         }
@@ -131,20 +127,21 @@ public class Server extends Thread implements Runnable {
         (new Server(g)).start();
         playGame(server, g);
 
+        // get and broadcast winner
         message = "Player " + getWinningBikeNumber(server, g) + " wins!";
         System.out.println(message);
         MulticastUDP.sendMessage(message);
 
         // end game
-        message = "END";
-        MulticastUDP.sendMessage(message);
+        System.out.println("Ending game");
+        MulticastUDP.sendMessage("END");
 
     }
 
     private static void playGame(Server server, Grid newGrid) throws InterruptedException, IOException {
         // play game -  if bikes go for same tile at same time wont die
         Boolean game = true;
-        newGrid.printGrid();
+//        newGrid.printGrid();
         while (game) {
 
             moveEachBike(server, newGrid);

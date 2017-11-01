@@ -94,7 +94,7 @@ public class LightCycle {
 
         }
         if (!cycleAlive) {
-            System.out.print("player " + playerNumber + " has crashed");
+            System.out.println("player " + playerNumber + " has crashed");
             // TODO: Terminate bike
         }
     }

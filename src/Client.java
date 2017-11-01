@@ -29,8 +29,8 @@ public class Client extends Thread implements Runnable{
                 md.setS(rMessage);
             }
             if (Objects.equals(rMessage, "END")) {
-                running = false;
                 System.out.println("Game over");
+                running = false;
             }
         }
     }
@@ -40,8 +40,8 @@ public class Client extends Thread implements Runnable{
         int myPort = 49158;
 //        InetAddress localIP = InetAddress.getLocalHost();
         // TODO: fix IP
-        String serverIP = "10.139.96.80";
-        String localIP =  "10.139.96.80";
+        String serverIP = "10.0.0.2";
+        String localIP =  "10.0.0.2";
 
 //        InetAddress zlocalIP = InetAddress.getLocalHost();
 //        System.out.println("my ip is: " + zlocalIP.getHostAddress());
@@ -59,7 +59,7 @@ public class Client extends Thread implements Runnable{
         bikeColors[2] = Color.red;
         bikeColors[3] = Color.green;
 
-        String username = "drope";
+        String username = "rope";
         // remove whitespace and non visible characters
         username = username.replaceAll("\\s+", "");
 
@@ -105,7 +105,9 @@ public class Client extends Thread implements Runnable{
                 System.out.println("Waiting for players to connect");
                 Thread.sleep(2000);
             } else if (thing.equals("START")) {
-                System.out.println("Game start in 5 seconds!");
+                for (int i = 5; i < 0; i--){
+                    System.out.println("Game start in " + i);
+                }
                 playing = true;
             }
         }
