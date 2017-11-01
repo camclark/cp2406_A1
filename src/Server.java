@@ -45,34 +45,38 @@ public class Server extends Thread implements Runnable {
                 if (rMessage != null) {
                     splitMessage = rMessage.split(" ");
 
-                    if (splitMessage[0].equals("USER")){
+                    if (splitMessage[0].equals("USER")) {
                         int bikeNumber = Integer.parseInt(splitMessage[1]) - 1;
 
 
-                        if(splitMessage[2].equals("TURN")){
+                        if (splitMessage[2].equals("TURN")) {
                             String direction = splitMessage[3];
-                            System.out.println("!! TURNING:" + direction);
+                            System.out.println("TURNING:" + direction);
                             // eg msg - USER player# TURN direction#
 
                             switch (direction) {
                                 case "NORTH":
-                                    System.out.println("!! NORTH !! for  " + g.bikeList.get(bikeNumber));
                                     g.bikeList.get(bikeNumber).direction = DIRECTION_NORTH;
                                     break;
                                 case "EAST":
-                                    System.out.println("!! EAST !! ");
                                     g.bikeList.get(bikeNumber).direction = DIRECTION_EAST;
                                     break;
                                 case "SOUTH":
-                                    System.out.println("!! SOUTH !! ");
                                     g.bikeList.get(bikeNumber).direction = DIRECTION_SOUTH;
                                     break;
                                 case "WEST":
-                                    System.out.println("!! WEST !! ");
                                     g.bikeList.get(bikeNumber).direction = DIRECTION_WEST;
                                     break;
                             }
                         }
+                        if (splitMessage[2].equals("TOGGLE")) {
+                            // eg msg - USER player# TOGGLE SPEED
+                            if (splitMessage[3].equals("SPEED")){
+                                System.out.println("Toggle speed for bike: " + g.bikeList.get(bikeNumber));
+                                g.bikeList.get(bikeNumber).toggleSpeed();
+                            }
+                        }
+
                     }
                 }
             } catch (Exception e) {
@@ -103,9 +107,9 @@ public class Server extends Thread implements Runnable {
 
 
         for (int i = 0; i < server.playerList.size(); i++) {
-            // origin and end - 1  to avoid starting on edge
-            int xPosition = ThreadLocalRandom.current().nextInt(1, gridWidth - 1);
-            int yPosition = ThreadLocalRandom.current().nextInt(1, gridHeight - 1);
+            // origin and end - 5  to avoid starting on edge
+            int xPosition = ThreadLocalRandom.current().nextInt(5, gridWidth - 5);
+            int yPosition = ThreadLocalRandom.current().nextInt(5, gridHeight - 5);
             int direction = ThreadLocalRandom.current().nextInt(0, 3 + 1);
 
 
@@ -142,17 +146,26 @@ public class Server extends Thread implements Runnable {
         Boolean game = true;
         newGrid.printGrid();
         while (game) {
-            moveEachBike(server, newGrid);
-            drawEachBike(server, newGrid);
 
-            // sleep and give players a chance to think
-            Thread.sleep(1000);
+            moveEachBike(server, newGrid);
+            Thread.sleep(500);
 
             // Position broadcast messageData eg: Jack,10,10 Jill,12,10 Tron,10,14
             StringBuilder positionMessage = getPlayerPositionsMessage(server, newGrid);
             MulticastUDP.sendMessage(positionMessage.toString());
+//            newGrid.printGrid();
+            game = isWinner(server, newGrid);
+            if (!game) {
+                break;
+            }
 
-            newGrid.printGrid();
+
+            moveEachFastBike(server, newGrid);
+            Thread.sleep(500);
+
+            positionMessage = getPlayerPositionsMessage(server, newGrid);
+            MulticastUDP.sendMessage(positionMessage.toString());
+//            newGrid.printGrid();
             game = isWinner(server, newGrid);
         }
     }
@@ -166,7 +179,7 @@ public class Server extends Thread implements Runnable {
     }
 
     private static StringBuilder getPlayerPositionsMessage(Server server, Grid newGrid) {
-        StringBuilder message  = new StringBuilder();
+        StringBuilder message = new StringBuilder();
         for (int i = 0; i < server.playerList.size(); i++) {
             Player player = server.playerList.get(i);
             LightCycle bike = newGrid.bikeList.get(i);
@@ -186,7 +199,7 @@ public class Server extends Thread implements Runnable {
     }
 
 
-        private static Integer numberBikesAlive(Server server, Grid newGrid) {
+    private static Integer numberBikesAlive(Server server, Grid newGrid) {
         int count = 0;
         for (int i = 0; i < server.playerList.size(); i++) {
             if (newGrid.bikeList.get(i).cycleAlive) {
@@ -198,15 +211,29 @@ public class Server extends Thread implements Runnable {
 
     private static void moveEachBike(Server server, Grid newGrid) {
         for (int i = 0; i < server.playerList.size(); i++) {
+            // move
             newGrid.bikeList.get(i).move();
+            // draw trail
+            newGrid.draw(newGrid.bikeList.get(i).xPosition, newGrid.bikeList.get(i).yPosition,
+                    newGrid.bikeList.get(i).playerNumber);
+
         }
     }
 
-    private static void drawEachBike(Server server, Grid newGrid) {
+    private static void moveEachFastBike(Server server, Grid newGrid) {
         for (int i = 0; i < server.playerList.size(); i++) {
-            newGrid.draw(newGrid.bikeList.get(i).xPosition, newGrid.bikeList.get(i).yPosition,
-                    newGrid.bikeList.get(i).playerNumber);
+            if (newGrid.bikeList.get(i).fastSpeed) {
+                // move
+                newGrid.bikeList.get(i).move();
+                // draw trail
+                newGrid.draw(newGrid.bikeList.get(i).xPosition, newGrid.bikeList.get(i).yPosition,
+                        newGrid.bikeList.get(i).playerNumber);
+            }
         }
+    }
+
+    private static void drawEachFastBike(Server server, Grid newGrid) {
+
     }
 
     private static void connector(int MY_PORT, Server server, int playersRequired) throws Exception {
@@ -251,7 +278,7 @@ public class Server extends Thread implements Runnable {
                     // send a messageData to client saying that username is taken and to try again
                 } else {
                     playerNumber = playerNumber + 1;
-                    message = "OKAY " + username + " " + playerNumber ;
+                    message = "OKAY " + username + " " + playerNumber;
                     server.playerList.add(new Player(username, ip, socket, playerNumber));
                     DirectUDP.send(socket, MY_PORT, ip, message);
 

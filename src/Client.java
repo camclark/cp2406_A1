@@ -1,8 +1,8 @@
 import java.awt.*;
+import java.net.InetAddress;
 import java.util.Objects;
 
 public class Client extends Thread implements Runnable{
-    private static String serverIP = "10.0.0.2";
     private messageData md;
 
 
@@ -40,7 +40,13 @@ public class Client extends Thread implements Runnable{
         int myPort = 49158;
 //        InetAddress localIP = InetAddress.getLocalHost();
         // TODO: fix IP
-        String localIP = "10.0.0.2";
+        String serverIP = "10.139.96.80";
+        String localIP =  "10.139.96.80";
+
+//        InetAddress zlocalIP = InetAddress.getLocalHost();
+//        System.out.println("my ip is: " + zlocalIP.getHostAddress());
+//        String d = zlocalIP.toString();
+
         messageData md = new messageData();
         Integer playerNumber = 0;
 
@@ -53,7 +59,7 @@ public class Client extends Thread implements Runnable{
         bikeColors[2] = Color.red;
         bikeColors[3] = Color.green;
 
-        String username = "pjojoy";
+        String username = "drope";
         // remove whitespace and non visible characters
         username = username.replaceAll("\\s+", "");
 
@@ -90,7 +96,7 @@ public class Client extends Thread implements Runnable{
         }
 
         System.out.println(username + " you are player " + playerNumber);
-        ClientGUI cg = new ClientGUI(playerNumber);
+        ClientGUI cg = new ClientGUI(playerNumber, serverIP);
 
 
         while (!playing) {

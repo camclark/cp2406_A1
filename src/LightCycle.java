@@ -12,6 +12,8 @@ public class LightCycle {
     int direction;
     private int[][] gameGrid;
     boolean cycleAlive = true;
+    boolean fastSpeed = false;
+
 
 
     public LightCycle(int initialDirection, int xPosition, int yPosition, int playerNumber, int[][] gameGridList) {
@@ -52,6 +54,10 @@ public class LightCycle {
         // Ensure move is within gameBoard and not on an already occupied quadrant
         return  x >= 0 && x < gameGrid.length && y >= 0 && y < gameGrid[0].length && gameGrid[x][y] == 0;
 
+    }
+
+    public void toggleSpeed(){
+        fastSpeed = !fastSpeed;
     }
 
     public void move() {

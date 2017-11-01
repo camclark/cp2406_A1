@@ -19,6 +19,9 @@ class ClientGUI extends JFrame {
     final int UP = 38;
     final int RIGHT = 39;
     final int DOWN = 40;
+    final int X = 88;
+    final int Z = 90;
+
     final Color DEFAULT_COLOR = Color.blue;
     Canvas canvas = new Canvas();
 
@@ -27,7 +30,27 @@ class ClientGUI extends JFrame {
 
     boolean gameOver = false;
 
-    ClientGUI(int playerNumber) {
+
+    // TODO: modify keylistener
+//    public void keyPressed(KeyEvent e) {
+//        int keyCode = e.getKeyCode();
+//        switch( keyCode ) {
+//            case KeyEvent.VK_UP:
+//                // handle up
+//                break;
+//            case KeyEvent.VK_DOWN:
+//                // handle down
+//                break;
+//            case KeyEvent.VK_LEFT:
+//                // handle left
+//                break;
+//            case KeyEvent.VK_RIGHT :
+//                // handle right
+//                break;
+//        }
+//    }
+
+    ClientGUI(int playerNumber, String serverIP) {
         setTitle("Tron by Cameron");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBounds(START_LOCATION, START_LOCATION, FIELD_WIDTH * POINT_RADIUS + FIELD_DX, FIELD_HEIGHT * POINT_RADIUS + FIELD_DY);
@@ -40,19 +63,24 @@ class ClientGUI extends JFrame {
                 int myPort = 49147;
                 if (e.getKeyCode() == LEFT) {
                     System.out.println("Left");
-                    message = "WEST";
+                    message = "TURN WEST";
                 } else if (e.getKeyCode() == UP) {
                     System.out.println("Up");
-                    message = "NORTH";
+                    message = "TURN NORTH";
 
                 } else if (e.getKeyCode() == RIGHT) {
                     System.out.println("Right");
-                    message = "EAST";
+                    message = "TURN EAST";
 
                 } else if (e.getKeyCode() == DOWN) {
                     System.out.println("Down");
-                    message = "SOUTH";
-
+                    message = "TURN SOUTH";
+//                } else if (e.getKeyCode() == X){
+//                    System.out.println("Toggle speed");
+//                    message = "TOGGLE TRAIL";
+                } else if (e.getKeyCode() == Z){
+                    System.out.println("Toggle speed");
+                    message = "TOGGLE SPEED";
                 }
 
                 // todo: change to player number
@@ -60,7 +88,7 @@ class ClientGUI extends JFrame {
                 while (!sent) {
                     try {
                         // needs playerNumber
-                        DirectUDP.send(49152, myPort, "10.0.0.2", "USER " + playerNumber + " TURN " + message);
+                        DirectUDP.send(49152, myPort, serverIP, "USER " + playerNumber + " " + message);
                         sent = true;
                         System.out.println("Sent " + message);
                         // USER player# TURN direction#
