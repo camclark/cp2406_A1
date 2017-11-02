@@ -29,7 +29,7 @@ class ClientGUI extends JFrame {
     boolean gameOver = false;
 
 
-    // TODO: modify keylistener
+//    // TODO: modify keylistener
 //    public void keyPressed(KeyEvent e) {
 //        int keyCode = e.getKeyCode();
 //        switch( keyCode ) {
@@ -49,6 +49,7 @@ class ClientGUI extends JFrame {
 //    }
 
     ClientGUI(int playerNumber, String serverIP) {
+        setBackground(Color.BLACK);
         setTitle("Tron by Cameron");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBounds(START_LOCATION, START_LOCATION, FIELD_WIDTH * POINT_RADIUS + FIELD_DX, FIELD_HEIGHT * POINT_RADIUS + FIELD_DY);

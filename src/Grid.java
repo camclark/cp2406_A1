@@ -41,6 +41,18 @@ public class Grid{
 
     }
 
+    public Integer countPlayerTrail(int playerNumber){
+        int count = 0;
+        for (int y = 0; y < GRID_HEIGHT; y++) {
+            for (int x = 0; x < GRID_WIDTH; x++) {
+                if (grid[x][y] == playerNumber){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
     public void draw(int xPosition, int yPosition, int playerNumber) {
         grid[xPosition][yPosition] = playerNumber;
     }

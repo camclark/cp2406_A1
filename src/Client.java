@@ -32,6 +32,8 @@ public class Client extends Thread implements Runnable {
                 System.out.println("Game over");
                 running = false;
             }
+
+            // winner and max score
         }
     }
 
@@ -43,7 +45,7 @@ public class Client extends Thread implements Runnable {
         String serverIP = "10.0.0.2";
         String localIP = "10.0.0.2";
 
-        String username = "rsosspes";
+        String username = "sam";
         // remove whitespace and non visible characters
 
         username = username.replaceAll("\\s+", "");
@@ -118,7 +120,7 @@ public class Client extends Thread implements Runnable {
                         }
                     }
                     cg.refresh();
-                    Thread.sleep(500);
+                    Thread.sleep(100);
                 } else if (splitMessage[0].equals("END")){
                     playing = false;
                 }

@@ -82,8 +82,6 @@ public class Server extends Thread implements Runnable {
         }
     }
 
-
-
     public static void main(String[] args) throws Exception {
         int MY_PORT = 49152;
         // change later to as many as needed
@@ -133,10 +131,36 @@ public class Server extends Thread implements Runnable {
         System.out.println(message);
         MulticastUDP.sendMessage(message);
 
+        // // find and send max trail
+        message = getMaxTrailLength(g, server);
+        System.out.println(message);
+        MulticastUDP.sendMessage(message);
+
+        // add to high scores
+
+
         // end game
         System.out.println("Ending game");
         MulticastUDP.sendMessage("END");
+    }
 
+    private static String getMaxTrailLength(Grid g, Server server) {
+        String message;
+        int score, maxScore = 0, maxScorePlayer = 0;
+
+        for (int i = 1; i < server.playerList.size() + 1; i++) {
+            score = g.countPlayerTrail(i);
+            System.out.println("Counted " + score + " for " + i);
+            if (score > maxScore){
+                maxScore = score;
+                maxScorePlayer = i;
+            }
+        }
+        // 0th player list position converted to player 1 ect
+        maxScorePlayer--;
+        String maxScoreUsername = server.playerList.get(maxScorePlayer).getUsername();
+        message = "MAX SCORE " + maxScore + " " + maxScoreUsername;
+        return message;
     }
 
     private static void playGame(Server server, Grid newGrid) throws InterruptedException, IOException {
@@ -146,7 +170,7 @@ public class Server extends Thread implements Runnable {
         while (game) {
 
             moveEachBike(server, newGrid);
-            Thread.sleep(500);
+            Thread.sleep(250);
 
             // Position broadcast messageData eg: Jack,10,10 Jill,12,10 Tron,10,14
             StringBuilder positionMessage = getPlayerPositionsMessage(server, newGrid);
@@ -159,7 +183,7 @@ public class Server extends Thread implements Runnable {
 
 
             moveEachFastBike(server, newGrid);
-            Thread.sleep(500);
+            Thread.sleep(250);
 
             positionMessage = getPlayerPositionsMessage(server, newGrid);
             MulticastUDP.sendMessage(positionMessage.toString());
@@ -192,7 +216,6 @@ public class Server extends Thread implements Runnable {
                 return newGrid.bikeList.get(i).playerNumber;
             }
         }
-        // needed? otherwise no return?
         return 0;
     }
 
@@ -228,10 +251,6 @@ public class Server extends Thread implements Runnable {
                         newGrid.bikeList.get(i).playerNumber);
             }
         }
-    }
-
-    private static void drawEachFastBike(Server server, Grid newGrid) {
-
     }
 
     private static void connector(int MY_PORT, Server server, int playersRequired) throws Exception {
