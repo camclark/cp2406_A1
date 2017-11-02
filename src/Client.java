@@ -1,8 +1,7 @@
 import java.awt.*;
-import java.net.InetAddress;
 import java.util.Objects;
 
-public class Client extends Thread implements Runnable{
+public class Client extends Thread implements Runnable {
     private messageData md;
 
 
@@ -29,6 +28,7 @@ public class Client extends Thread implements Runnable{
                 md.setS(rMessage);
             }
             if (Objects.equals(rMessage, "END")) {
+                md.setS(rMessage);
                 System.out.println("Game over");
                 running = false;
             }
@@ -38,44 +38,29 @@ public class Client extends Thread implements Runnable{
     public static void main(String[] args) throws Exception {
         int SEVER_PORT = 49152;
         int myPort = 49158;
-//        InetAddress localIP = InetAddress.getLocalHost();
+
         // TODO: fix IP
         String serverIP = "10.0.0.2";
-        String localIP =  "10.0.0.2";
+        String localIP = "10.0.0.2";
 
-//        InetAddress zlocalIP = InetAddress.getLocalHost();
-//        System.out.println("my ip is: " + zlocalIP.getHostAddress());
-//        String d = zlocalIP.toString();
+        String username = "rsosspes";
+        // remove whitespace and non visible characters
+
+        username = username.replaceAll("\\s+", "");
 
         messageData md = new messageData();
-        Integer playerNumber = 0;
-
+        Integer playerNumber = 0, moveX, moveY;
+        Boolean connected = false, playing = false;
+        String[] splitMessage, moveInformation;
+        String message;
 
         (new Client(md)).start();
-
+        // TODO: fix bike colours
         Color[] bikeColors = new Color[4];
         bikeColors[0] = Color.black;
         bikeColors[1] = Color.blue;
         bikeColors[2] = Color.red;
         bikeColors[3] = Color.green;
-
-        String username = "rope";
-        // remove whitespace and non visible characters
-        username = username.replaceAll("\\s+", "");
-
-
-        Boolean connected = false;
-        Boolean playing = false;
-
-        String[] splitMessage;
-        String[] moveInformation;
-
-        // TODO: fix bike colours
-
-
-        int moveX, moveY;
-
-        String message;
 
         while (!connected) {
             try {
@@ -86,7 +71,7 @@ public class Client extends Thread implements Runnable{
                 message = DirectUDP.receive(myPort);
                 System.out.println("Received: " + message);
                 splitMessage = message.split(" ");
-                if (splitMessage[0].equals("OKAY")){
+                if (splitMessage[0].equals("OKAY")) {
                     playerNumber = Integer.parseInt(splitMessage[2]);
                     connected = true;
                 }
@@ -105,8 +90,9 @@ public class Client extends Thread implements Runnable{
                 System.out.println("Waiting for players to connect");
                 Thread.sleep(2000);
             } else if (thing.equals("START")) {
-                for (int i = 5; i < 0; i--){
+                for (int i = 5; i > 0; i--) {
                     System.out.println("Game start in " + i);
+                    Thread.sleep(1000);
                 }
                 playing = true;
             }
@@ -119,17 +105,22 @@ public class Client extends Thread implements Runnable{
                 if (splitMessage.length > 1) {
                     int i = 0;
                     for (String aSplitMessage : splitMessage) {
-                        i = i+1;
+                        i = i + 1;
                         moveInformation = aSplitMessage.split(",");
 
                         moveX = Integer.parseInt(moveInformation[1]);
                         moveY = Integer.parseInt(moveInformation[2]);
-                        System.out.println("Attempted update X:" + moveX + " Y:" + moveY);
+//                        System.out.println("Attempted update X:" + moveX + " Y:" + moveY);
 
-                        cg.trail1.update(moveX, moveY, bikeColors[i]);
+                        cg.t.update(moveX, moveY, bikeColors[i]);
+                        if (i == playerNumber){
+                            cg.b.move(moveX, moveY);
+                        }
                     }
                     cg.refresh();
                     Thread.sleep(500);
+                } else if (splitMessage[0].equals("END")){
+                    playing = false;
                 }
             }
         }
