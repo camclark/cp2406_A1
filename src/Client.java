@@ -45,7 +45,7 @@ public class Client extends Thread implements Runnable {
         String serverIP = "10.0.0.2";
         String localIP = "10.0.0.2";
 
-        String username = "sam";
+        String username = "cam";
         // remove whitespace and non visible characters
 
         username = username.replaceAll("\\s+", "");

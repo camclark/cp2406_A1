@@ -107,8 +107,8 @@ class ClientGUI extends JFrame {
     }
 
     public static class GuiBike {
-        int x;
-        int y;
+        int x = -1;
+        int y = -1;
 
 
         public GuiBike() {

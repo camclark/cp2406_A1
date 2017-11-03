@@ -1,7 +1,7 @@
 //import org.junit.Test;
 //
 //public class TestServer {
-//    @Test
+//    @FileHandler
 //    public void testCreate() throws Exception {
 //        Server newServer = new Server();
 //    }

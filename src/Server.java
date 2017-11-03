@@ -181,7 +181,6 @@ public class Server extends Thread implements Runnable {
                 break;
             }
 
-
             moveEachFastBike(server, newGrid);
             Thread.sleep(250);
 

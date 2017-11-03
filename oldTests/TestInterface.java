@@ -3,7 +3,7 @@ import javax.swing.*;
 
 public class TestInterface extends JPanel {
     /*
-    Test to understand how JPanels and moving objects work.
+    FileHandler to understand how JPanels and moving objects work.
     Two Ovals of different colours move to the right of the grid
     and reset once they've reached the boundary
      */
