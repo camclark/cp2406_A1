@@ -1,8 +1,8 @@
 public class Player {
-    String username;
-    Integer number;
-    String ip;
-    Integer socket;
+    private String username;
+    private Integer number;
+    private String ip;
+    private Integer socket;
 
     public Player(String username, String ip, Integer socket, int number) {
         this.username = username;
@@ -11,7 +11,7 @@ public class Player {
         this.number = number;
     }
 
-    public String getUsername() {
+    String getUsername() {
         return username;
     }
 
@@ -27,7 +27,7 @@ public class Player {
         this.socket = socket;
     }
 
-    public String getIp() {
+    String getIp() {
         return ip;
     }
 
@@ -35,7 +35,7 @@ public class Player {
         this.ip = ip;
     }
 
-    public Integer getNumber() {
+    Integer getNumber() {
         return number;
     }
 }

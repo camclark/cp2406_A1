@@ -161,7 +161,12 @@ public class Server extends Thread implements Runnable {
         // 0th player list position converted to player 1 ect
         maxScorePlayer--;
         String maxScoreUsername = server.playerList.get(maxScorePlayer).getUsername();
-        message = "MAX SCORE: " + maxScore + " by:" + maxScoreUsername;
+
+//        for (int i = 1; i < server.playerList.size() + 1; i++) {
+//            if
+//        }
+
+        message = "MAX SCORE: " + maxScore + " " + maxScoreUsername;
         return message;
     }
 
@@ -172,7 +177,7 @@ public class Server extends Thread implements Runnable {
         while (game) {
 
             moveEachBike(server, newGrid);
-            Thread.sleep(250);
+            Thread.sleep(120);
 
             // Position broadcast messageData eg: Jack,10,10 Jill,12,10 Tron,10,14
             StringBuilder positionMessage = getPlayerPositionsMessage(server, newGrid);
@@ -184,11 +189,11 @@ public class Server extends Thread implements Runnable {
             }
 
             moveEachFastBike(server, newGrid);
-            Thread.sleep(250);
+            Thread.sleep(125);
 
             positionMessage = getPlayerPositionsMessage(server, newGrid);
             MulticastUDP.sendMessage(positionMessage.toString());
-            newGrid.printGrid();
+//            newGrid.printGrid();
             game = isWinner(server, newGrid);
 
         }

@@ -123,7 +123,7 @@ public class Client extends Thread implements Runnable {
 
                             moveX = Integer.parseInt(moveInformation[1]);
                             moveY = Integer.parseInt(moveInformation[2]);
-//                        System.out.println("Attempted update X:" + moveX + " Y:" + moveY);
+                        System.out.println("Attempted update X:" + moveX + " Y:" + moveY);
 
                             cg.t.update(moveX, moveY, bikeColors[i]);
                             if (i == playerNumber) {
@@ -135,7 +135,7 @@ public class Client extends Thread implements Runnable {
                         break;
                     }
                     cg.refresh();
-                    Thread.sleep(100);
+                    Thread.sleep(50);
                 } else if (splitMessage[0].equals("END")){
                     playing = false;
                 }

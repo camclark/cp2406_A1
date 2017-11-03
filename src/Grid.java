@@ -3,8 +3,8 @@ import java.util.ArrayList;
 public class Grid{
 
     /* Height used as a constant in calculating the size of the visible GUI and the grid array. */
-    private final int GRID_HEIGHT = 40;
-    private final int GRID_WIDTH = 40;
+    private final int GRID_HEIGHT = 100;
+    private final int GRID_WIDTH = 100;
 
     /* Two-dimensional grid to keep track of which bikes have "claimed" which
        spots on the visible grid. */

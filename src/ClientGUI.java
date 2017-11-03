@@ -6,8 +6,8 @@ import java.util.*;
 class ClientGUI extends JFrame {
     final String GAME_OVER_MSG = "GAME OVER";
     static final int POINT_RADIUS = 10; // size of one point
-    final int FIELD_WIDTH = 40; // in point
-    final int FIELD_HEIGHT = 40;
+    final int FIELD_WIDTH = 100; // in point
+    final int FIELD_HEIGHT = 100;
     final int FIELD_DX = 6; // determined experimentally
     final int FIELD_DY = 28;
     final int START_LOCATION = 200; // late night coding can't recall why I put this, required for set bounds
