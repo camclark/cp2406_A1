@@ -1,8 +1,9 @@
-//import org.junit.Test;
-//
-//public class TestServer {
-//    @FileHandler
-//    public void testCreate() throws Exception {
-//        Server newServer = new Server();
-//    }
-//}
+import org.junit.Test;
+
+public class TestServer {
+    @Test
+    public void testCreate() throws Exception {
+        Grid g = new Grid();
+        Server newServer = new Server(g);
+    }
+}
