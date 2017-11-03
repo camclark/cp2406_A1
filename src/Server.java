@@ -186,8 +186,9 @@ public class Server extends Thread implements Runnable {
 
             positionMessage = getPlayerPositionsMessage(server, newGrid);
             MulticastUDP.sendMessage(positionMessage.toString());
-//            newGrid.printGrid();
+            newGrid.printGrid();
             game = isWinner(server, newGrid);
+
         }
     }
 

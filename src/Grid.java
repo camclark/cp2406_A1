@@ -10,7 +10,6 @@ public class Grid{
        spots on the visible grid. */
     int[][] grid = new int[GRID_WIDTH][GRID_HEIGHT];
 
-    // static bikes for the moment
     ArrayList<LightCycle> bikeList = new ArrayList<>();
 
     public Grid() {

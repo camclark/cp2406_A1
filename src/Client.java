@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
@@ -42,12 +43,12 @@ public class Client extends Thread implements Runnable {
         int myPort = 49158;
 
         // TODO: fix IP
-        String serverIP = "10.0.0.2";
-        String localIP = "10.0.0.2";
+        String serverIP = "10.139.96.80";
+        String localIP = "10.139.96.80";
 
-        String username = "cam";
+        String username = "Sam";
+
         // remove whitespace and non visible characters
-
         username = username.replaceAll("\\s+", "");
 
         messageData md = new messageData();
@@ -57,6 +58,7 @@ public class Client extends Thread implements Runnable {
         String message;
 
         (new Client(md)).start();
+
         // TODO: fix bike colours
         Color[] bikeColors = new Color[4];
         bikeColors[0] = Color.black;
@@ -90,10 +92,13 @@ public class Client extends Thread implements Runnable {
             String thing = md.getS();
             if (thing == null || !thing.equals("START")) {
                 System.out.println("Waiting for players to connect");
+                cg.statusLabel.setText(username + " - Waiting for players to connect" );
                 Thread.sleep(2000);
             } else if (thing.equals("START")) {
                 for (int i = 5; i > 0; i--) {
                     System.out.println("Game start in " + i);
+                    cg.statusLabel.setText(username + " - Game start in " + i );
+
                     Thread.sleep(1000);
                 }
                 playing = true;
@@ -106,18 +111,24 @@ public class Client extends Thread implements Runnable {
                 splitMessage = message.split(" ");
                 if (splitMessage.length > 1) {
                     int i = 0;
-                    for (String aSplitMessage : splitMessage) {
-                        i = i + 1;
-                        moveInformation = aSplitMessage.split(",");
+                    try {
+                        for (String aSplitMessage : splitMessage) {
+                            i = i + 1;
+                            moveInformation = aSplitMessage.split(",");
 
-                        moveX = Integer.parseInt(moveInformation[1]);
-                        moveY = Integer.parseInt(moveInformation[2]);
+                            moveX = Integer.parseInt(moveInformation[1]);
+                            moveY = Integer.parseInt(moveInformation[2]);
 //                        System.out.println("Attempted update X:" + moveX + " Y:" + moveY);
 
-                        cg.t.update(moveX, moveY, bikeColors[i]);
-                        if (i == playerNumber){
-                            cg.b.move(moveX, moveY);
+                            cg.t.update(moveX, moveY, bikeColors[i]);
+                            if (i == playerNumber) {
+                                cg.b.move(moveX, moveY);
+                            }
                         }
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        playing = false;
+
+                        break;
                     }
                     cg.refresh();
                     Thread.sleep(100);

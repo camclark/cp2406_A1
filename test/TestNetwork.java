@@ -19,6 +19,10 @@ public class TestNetwork {
         // test sending of message
         DirectUDP.send(49152, myPort, serverIP, "USER " + playerNumber + " " + message);
 
+        // test sending of different message
+        message = "TOGGLE SPEED";
+        DirectUDP.send(49152, myPort, serverIP, "USER " + playerNumber + " " + message);
+
         //check that there are no exceptions raised
         assert !expectedEx.equals(ExpectedException.none());
     }

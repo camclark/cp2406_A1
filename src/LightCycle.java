@@ -90,12 +90,10 @@ public class LightCycle {
                     xPosition--;
                 }
                 break;
-            // kill bike
 
         }
         if (!cycleAlive) {
             System.out.println("player " + playerNumber + " has crashed");
-            // TODO: Terminate bike
         }
     }
 }
