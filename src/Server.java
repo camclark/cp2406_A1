@@ -127,7 +127,7 @@ public class Server extends Thread implements Runnable {
         playGame(server, g);
 
         // get and broadcast winner
-        message = "Player " + getWinningBikeNumber(server, g) + " wins!";
+        message = "PLAYER " + getWinningBikeNumber(server, g) + " WINS";
         System.out.println(message);
         MulticastUDP.sendMessage(message);
 
@@ -140,6 +140,8 @@ public class Server extends Thread implements Runnable {
 
 
         // end game
+
+        Thread.sleep(2000);
         System.out.println("Ending game");
         MulticastUDP.sendMessage("END");
     }
@@ -159,7 +161,7 @@ public class Server extends Thread implements Runnable {
         // 0th player list position converted to player 1 ect
         maxScorePlayer--;
         String maxScoreUsername = server.playerList.get(maxScorePlayer).getUsername();
-        message = "MAX SCORE " + maxScore + " " + maxScoreUsername;
+        message = "MAX SCORE: " + maxScore + " by:" + maxScoreUsername;
         return message;
     }
 

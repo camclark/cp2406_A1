@@ -28,6 +28,7 @@ public class Client extends Thread implements Runnable {
             if (rMessage != null) {
                 md.setS(rMessage);
             }
+
             if (Objects.equals(rMessage, "END")) {
                 md.setS(rMessage);
                 System.out.println("Game over");
@@ -46,7 +47,7 @@ public class Client extends Thread implements Runnable {
         String serverIP = "10.139.96.80";
         String localIP = "10.139.96.80";
 
-        String username = "Sam";
+        String username = "Cam";
 
         // remove whitespace and non visible characters
         username = username.replaceAll("\\s+", "");
@@ -91,7 +92,7 @@ public class Client extends Thread implements Runnable {
         while (!playing) {
             String thing = md.getS();
             if (thing == null || !thing.equals("START")) {
-                System.out.println("Waiting for players to connect");
+//                System.out.println("Waiting for players to connect - use arrow keys to move z to toggle speed");
                 cg.statusLabel.setText(username + " - Waiting for players to connect" );
                 Thread.sleep(2000);
             } else if (thing.equals("START")) {
@@ -101,6 +102,8 @@ public class Client extends Thread implements Runnable {
 
                     Thread.sleep(1000);
                 }
+                cg.statusLabel.setText(username + " - You are the black dot");
+
                 playing = true;
             }
         }
@@ -109,7 +112,9 @@ public class Client extends Thread implements Runnable {
             message = md.getS();
             if (message != null) {
                 splitMessage = message.split(" ");
-                if (splitMessage.length > 1) {
+                if ((splitMessage[0].equals("MAX"))){
+                   cg.statusLabel.setText(message);
+                } else if (splitMessage.length > 1) {
                     int i = 0;
                     try {
                         for (String aSplitMessage : splitMessage) {
@@ -127,7 +132,6 @@ public class Client extends Thread implements Runnable {
                         }
                     } catch (ArrayIndexOutOfBoundsException e) {
                         playing = false;
-
                         break;
                     }
                     cg.refresh();
@@ -137,5 +141,7 @@ public class Client extends Thread implements Runnable {
                 }
             }
         }
+        Thread.sleep(3000);
+        cg.gameOver = true;
     }
 }

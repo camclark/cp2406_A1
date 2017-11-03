@@ -1,3 +1,6 @@
 James 120
 Dean 87
 Sam 34
+John 21
+Cam 10
+Sam 9
