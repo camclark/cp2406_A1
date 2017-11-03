@@ -5,7 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 
 public class Server extends Thread implements Runnable {
-    private ArrayList<Player> playerList = new ArrayList<>();
+    public ArrayList<Player> playerList = new ArrayList<>();
     // eg of how to get from ArrayList -  server.playerList.get(0).getUsername()
     private Grid g;
 

@@ -13,14 +13,24 @@ public class TestGrid {
 
         assert g.bikeList.size() > 0;
 
-        g.bikeList.get(0).move();
-
         // check to see if bike can move horizontally
+        g.bikeList.get(0).move();
         assert g.bikeList.get(0).xPosition == 3;
 
-        g.bikeList.get(1).move();
-
         // check to see if bike can move vertically
+        g.bikeList.get(1).move();
         assert g.bikeList.get(1).yPosition == 4;
+
+        // check to see if bike can turn
+        g.bikeList.get(0).turnSouth();
+        assert g.bikeList.get(0).direction == 2;
+
+        // check to see if bike can toggle speed to fast
+        g.bikeList.get(0).toggleSpeed();
+        assert g.bikeList.get(0).fastSpeed;
+
+        // check to see if bike can toggle speed back to slow
+        g.bikeList.get(0).toggleSpeed();
+        assert !g.bikeList.get(0).fastSpeed;
     }
 }

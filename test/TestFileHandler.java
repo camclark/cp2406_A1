@@ -3,7 +3,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 public class TestFileHandler {
-    // should throw no errors, ie file not found or cannot write to file
+    // should throw no errors, ie file not found or cannot write to fike
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
 
@@ -18,7 +18,5 @@ public class TestFileHandler {
 
         //check that the formatting is the same for all entries
         assert fh.scoreList.get(0).split(" ").length == 2;
-
-
     }
 }

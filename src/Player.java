@@ -34,4 +34,8 @@ public class Player {
     public void setIp(String ip) {
         this.ip = ip;
     }
+
+    public Integer getNumber() {
+        return number;
+    }
 }
