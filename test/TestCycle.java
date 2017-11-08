@@ -11,5 +11,6 @@ public class TestCycle {
 
         // check to see if players were added to list
         assert newServer.playerList.size() > 0;
+
     }
 }
