@@ -31,44 +31,19 @@ class ClientGUI extends JFrame {
 
     boolean gameOver = false;
 
-
-//    // TODO: modify keylistener
-//    public void keyPressed(KeyEvent e) {
-//        int keyCode = e.getKeyCode();
-//        switch( keyCode ) {
-//            case KeyEvent.VK_UP:
-//                // handle up
-//                break;
-//            case KeyEvent.VK_DOWN:
-//                // handle down
-//                break;
-//            case KeyEvent.VK_LEFT:
-//                // handle left
-//                break;
-//            case KeyEvent.VK_RIGHT :
-//                // handle right
-//                break;
-//        }
-//    }
-
     ClientGUI(int playerNumber, String serverIP) {
         setBackground(Color.BLACK);
         setTitle("Tron by Cameron");
         add(panel);
-//        setSize(, 1000);
         setBounds(START_LOCATION, START_LOCATION, FIELD_WIDTH * POINT_RADIUS + FIELD_DX, FIELD_HEIGHT * POINT_RADIUS + FIELD_DY);
 
-//        panel.add(canvas, BorderLayout.NORTH);
-//        panel.add(statusLabel, BorderLayout.SOUTH);
-
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-//        panel.setBounds(START_LOCATION, START_LOCATION, FIELD_WIDTH * POINT_RADIUS + FIELD_DX, FIELD_HEIGHT * POINT_RADIUS + FIELD_DY);
         setResizable(false);
-//        canvas.setBackground(Color.white);
         add(BorderLayout.CENTER, canvas);
         statusLabel.setHorizontalAlignment(JLabel.CENTER);
         add(BorderLayout.SOUTH, statusLabel);
-
+//        setBackground(Color.darkGray);
+        canvas.setBackground(Color.darkGray);
 
         addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
@@ -168,8 +143,6 @@ class ClientGUI extends JFrame {
                     point.paintHead(g);
                 }
             }
-
-
         }
     }
 
@@ -201,7 +174,7 @@ class ClientGUI extends JFrame {
             g.fill3DRect(getX() * POINT_RADIUS, getY() * POINT_RADIUS, POINT_RADIUS, POINT_RADIUS, true); // fillOval()
         }
         void paintHead(Graphics g) {
-            g.setColor(Color.black);
+            g.setColor(Color.white);
             g.fill3DRect(getX() * POINT_RADIUS, getY() * POINT_RADIUS, POINT_RADIUS, POINT_RADIUS, true); // fillOval()
         }
     }

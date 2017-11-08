@@ -85,7 +85,7 @@ public class Server extends Thread implements Runnable {
     public static void main(String[] args) throws Exception {
         int MY_PORT = 49152;
         // change later to as many as needed
-        int playersRequired = 2;
+        int playersRequired = 3;
         Grid g = new Grid();
         Server server = new Server(g);
 
@@ -93,7 +93,7 @@ public class Server extends Thread implements Runnable {
         InetAddress localIP = InetAddress.getLocalHost();
         System.out.println("my ip is: " + localIP.getHostAddress());
 
-        // get connection of two players
+        // get connection of players
         connector(MY_PORT, server, playersRequired);
 
         // start new game
@@ -126,10 +126,10 @@ public class Server extends Thread implements Runnable {
         (new Server(g)).start();
         playGame(server, g);
 
-        // get and broadcast winner
-        message = "PLAYER " + getWinningBikeNumber(server, g) + " WINS";
-        System.out.println(message);
-        MulticastUDP.sendMessage(message);
+//        // get and broadcast winner
+//        message = "PLAYER " + getWinningBikeNumber(server, g) + " WINS";
+//        System.out.println(message);
+//        MulticastUDP.sendMessage(message);
 
         // // find and send max trail
         message = getMaxTrailLength(g, server);
@@ -162,11 +162,11 @@ public class Server extends Thread implements Runnable {
         maxScorePlayer--;
         String maxScoreUsername = server.playerList.get(maxScorePlayer).getUsername();
 
-//        for (int i = 1; i < server.playerList.size() + 1; i++) {
-//            if
-//        }
 
-        message = "MAX SCORE: " + maxScore + " " + maxScoreUsername;
+        Integer winnerNumber = getWinningBikeNumber(server, g) - 1;
+        String winnerUsername = server.playerList.get(winnerNumber).getUsername();
+
+        message =  "WINNER: " +  winnerUsername +  " --- MAX SCORE: " + maxScore + " " + maxScoreUsername;
         return message;
     }
 
@@ -284,7 +284,6 @@ public class Server extends Thread implements Runnable {
             // add to list
             if (splitMessage[0].equals("ADD")) {
                 String username = splitMessage[1];
-                // TODO: fix IP
                 String ip = splitMessage[2];
 
                 Integer socket = Integer.parseInt(splitMessage[4]);

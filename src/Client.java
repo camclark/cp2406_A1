@@ -47,7 +47,7 @@ public class Client extends Thread implements Runnable {
         String serverIP = "10.139.96.80";
         String localIP = "10.139.96.80";
 
-        String username = "Cam";
+        String username = "Pam";
 
         // remove whitespace and non visible characters
         username = username.replaceAll("\\s+", "");
@@ -112,7 +112,7 @@ public class Client extends Thread implements Runnable {
             message = md.getS();
             if (message != null) {
                 splitMessage = message.split(" ");
-                if ((splitMessage[0].equals("MAX"))){
+                if ((splitMessage[0].equals("WINNER:"))){
                    cg.statusLabel.setText(message);
                 } else if (splitMessage.length > 1) {
                     int i = 0;
