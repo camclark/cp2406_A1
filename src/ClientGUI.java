@@ -42,7 +42,6 @@ class ClientGUI extends JFrame {
         add(BorderLayout.CENTER, canvas);
         statusLabel.setHorizontalAlignment(JLabel.CENTER);
         add(BorderLayout.SOUTH, statusLabel);
-//        setBackground(Color.darkGray);
         canvas.setBackground(Color.darkGray);
 
         addKeyListener(new KeyAdapter() {
@@ -79,7 +78,7 @@ class ClientGUI extends JFrame {
                         DirectUDP.send(49152, myPort, serverIP, "USER " + playerNumber + " " + message);
                         sent = true;
                         System.out.println("Sent " + message);
-                        // USER player# TURN direction#
+                        // eg message - USER player# TURN direction#
 
                     } catch (Exception e1) {
                         myPort = myPort + 1;

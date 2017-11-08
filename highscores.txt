@@ -1,7 +1,10 @@
 Cam 402
 James 120
 Dean 87
+Pam 64
+Cam 49
+Pam 48
+Sam 47
+Cam 43
 Sam 34
 John 21
-Cam 10
-Sam 9

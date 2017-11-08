@@ -1,12 +1,14 @@
+import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
 
-public class FileHandler {
+public class FileHandler extends JFrame{
     public ArrayList<String> scoreList = new ArrayList<>();
 
     //constructor
     public FileHandler() {
-
+        super("Highscores");
+        setBounds(1,1,200,200);
 
         try {
             FileReader fr = new FileReader("highscores.txt");
@@ -51,11 +53,14 @@ public class FileHandler {
                 System.out.println("No file found!");
             }
 
+        JList<String> displayList = new JList<>(scoreList.toArray(new String[0]));
+        JScrollPane scrollPane = new JScrollPane(displayList);
+
+        getContentPane().add(scrollPane);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setVisible(true);
 
     }
-
-
-
 
     public static void main(String[] args) {
         FileHandler t = new FileHandler();

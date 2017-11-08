@@ -44,10 +44,10 @@ public class Client extends Thread implements Runnable {
         int myPort = 49158;
 
         // TODO: fix IP
-        String serverIP = "10.139.96.80";
-        String localIP = "10.139.96.80";
+        String serverIP = "10.0.0.2";
+        String localIP = "10.0.0.2";
 
-        String username = "Pam";
+        String username = "Sam";
 
         // remove whitespace and non visible characters
         username = username.replaceAll("\\s+", "");

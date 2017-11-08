@@ -137,13 +137,14 @@ public class Server extends Thread implements Runnable {
         MulticastUDP.sendMessage(message);
 
         // add to high scores
-
+        new FileHandler();
 
         // end game
 
         Thread.sleep(2000);
         System.out.println("Ending game");
         MulticastUDP.sendMessage("END");
+
     }
 
     private static String getMaxTrailLength(Grid g, Server server) {
